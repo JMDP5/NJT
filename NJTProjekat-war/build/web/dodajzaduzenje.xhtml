@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>TODO supply a title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Dodaj zaduzenje:"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Datumdodele:" for="datumdodele" />
+                    <h:inputText id="datumdodele" value="#{zaduzenje.zaduzenje.datumdodele}" title="Datumdodele" >
+                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                    </h:inputText>
+                    <h:outputLabel value="Napomena:" for="napomena" />
+                    <h:inputTextarea rows="4" cols="30" id="napomena" value="#{zaduzenje.zaduzenje.napomena}" title="Napomena" />
+                    <h:outputLabel value="Zadatak:" for="zadatak" />
+                    <h:selectOneMenu id="zadatak" value="#{zaduzenje.zadatakId}" title="Zadatak" required="true" requiredMessage="The Zadatak field is required.">
+                        <f:selectItem itemLabel="Odaberite zadatak: " itemValue="" />
+                        <f:selectItems value="#{zaduzenje.vratiSveZadatke()}" var="z"
+                                       itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
+
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Korisnik:" for="korisnik" />
+                    <h:selectOneMenu id="korisnik" value="#{zaduzenje.korisnikId}" title="Korisnik" required="true" requiredMessage="The Korisnik field is required.">
+
+                        <f:selectItem itemLabel="Odaberi korisnika" itemValue="" />
+                        <f:selectItems value="#{zaduzenje.vratiSveKorisnike()}" var="k"
+                                       itemLabel="#{k.ime}" itemValue="#{k.korisnikid}"/>
+                    </h:selectOneMenu>
+                    <p:commandButton value="Submit" id="submit" actionListener="#{zaduzenje.sacuvajZaduzenje()}" type="submit"/>
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+    </h:body>
+</html>
