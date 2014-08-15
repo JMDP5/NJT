@@ -26,10 +26,12 @@ and open the template in the editor.
                             <h:selectOneMenu id="zadatak" value="#{rezultat.zadatakID}" title="Zadatak" >
                                 <f:selectItems value="#{rezultat.vratiNadjeneZadatke()}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
+                                <f:ajax listener="#{rezultat.postaviSlikeZadataka()}" render="galleria" />
                             </h:selectOneMenu>
 
                             <h:outputLabel value="Slike: " />
-                            <p:galleria value="#{pretraga.slike}" var="slika" panelWidth="250" panelHeight="200" showCaption="true">
+
+                            <p:galleria id="galleria" value="#{rezultat.slike}" var="slika" panelWidth="250" panelHeight="200" showCaption="true">
                                 <p:graphicImage name="Images/#{slika}" width="250" height="200" title="#{slika}"/>
                             </p:galleria>
                             <h:commandLink action="pretraga?faces-redirect=true" value="Nazad na pretragu"></h:commandLink>

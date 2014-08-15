@@ -88,6 +88,10 @@ public class PretragaZadataka implements Serializable {
         return null;
 
     }
+    
+    public String izmeni() {
+        return "izmenabrisanje?faces-redirect=true";
+    }
 
     public void pronajdiZadatak() {
         SimpleDateFormat sdf

@@ -10,6 +10,7 @@ import domen.Zadatak;
 import domen.Zaduzenje;
 import domen.ZaduzenjePK;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -43,6 +44,7 @@ public class ZaduzenjeBean implements Serializable {
     @PostConstruct
     public void init() {
         zaduzenje = new Zaduzenje();
+        zaduzenje.setDatumdodele(new Date());
     }
 
     public List<Korisnik> vratiSveKorisnike() {

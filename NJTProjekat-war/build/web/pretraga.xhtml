@@ -33,6 +33,10 @@ and open the template in the editor.
                                 <p:graphicImage name="Images/#{slika}" width="250" height="200" title="#{slika}"/>
                             </p:galleria>
                             <h:commandButton value="Pretrazi" action="#{pretraga.pretrazi()}"></h:commandButton>
+                            <!--Ovo dole treba da se pojavi kada se klikne pretrazi-->
+                            <h:commandButton value="Izmeni zadatak" action="#{pretraga.izmeni()}"></h:commandButton>
+                            
+                            
                         </h:panelGrid>
                         <p:messages showDetail="true" />
                     </h:form>

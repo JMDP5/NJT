@@ -12,17 +12,17 @@ and open the template in the editor.
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>TODO supply a title</title>
+        <title>Dodaj novo zaduzenje.</title>
     </h:head>
     <h:body>
         <f:view>
 
 
             <h:form>
-                <h1><h:outputText value="Dodaj zaduzenje:"/></h1>
+                <h1><h:outputText value="Kreiraj novo zaduzenje:"/></h1>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Datumdodele:" for="datumdodele" />
-                    <h:inputText id="datumdodele" value="#{zaduzenje.zaduzenje.datumdodele}" title="Datumdodele" >
+                    <h:outputLabel  value="Datumdodele:  " for="datumdodele" />
+                    <h:inputText id="datumdodele" value="#{zaduzenje.zaduzenje.datumdodele}" title="Datumdodele" readonly="true">
                         <f:convertDateTime pattern="yyyy-MM-dd" />
                     </h:inputText>
                     <h:outputLabel value="Napomena:" for="napomena" />
@@ -41,7 +41,7 @@ and open the template in the editor.
                         <f:selectItems value="#{zaduzenje.vratiSveKorisnike()}" var="k"
                                        itemLabel="#{k.ime}" itemValue="#{k.korisnikid}"/>
                     </h:selectOneMenu>
-                    <p:commandButton value="Submit" id="submit" actionListener="#{zaduzenje.sacuvajZaduzenje()}" type="submit"/>
+                    <p:commandButton value="Dodaj zaduzenje" id="submit" actionListener="#{zaduzenje.sacuvajZaduzenje()}" type="submit"/>
                 </h:panelGrid>
             </h:form>
         </f:view>
