@@ -3,72 +3,53 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedbeans.zadatak;
+package managedbeans.obavljanje;
 
 import domen.Korisnik;
 import domen.Slika;
 import domen.Zadatak;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import session.zadatak.ZadatakSession;
 
 /**
  *
  * @author aleksandar
  */
-@Named(value = "rezultat")
+@Named(value = "obavljanjezadatka")
 @SessionScoped
-public class RezultatPretrage implements Serializable {
+public class ObavljanjeBean implements Serializable {
+
+    @EJB
+    private ZadatakSession zadatakSession;
 
     private List<Zadatak> zadaci;
     private Zadatak zadatak;
     private String zadatakID;
-    List<String> slike;
+    private List<String> slike;
+    private String slika;
 
     /**
-     * Creates a new instance of RezultatPretrage
+     * Creates a new instance of ObavljanjeBean
      */
-    public RezultatPretrage() {
-
+    public ObavljanjeBean() {
     }
 
-    @PostConstruct
-    public void init() {
-        zadatak = new Zadatak();
-    }
-
-    public List<Zadatak> vratiNadjeneZadatke() {
-        zadaci = new ArrayList<>();
+    public List<Zadatak> vratiZadatkeKorisnika() {
+        this.zadaci = new ArrayList<>();
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-        List l = (List) session.getAttribute("rezultat");
-        for (Object z : l) {
-            zadaci.add((Zadatak) z);
-        }
+        Korisnik k = (Korisnik) session.getAttribute("korisnik");
+        System.out.println("Id ulogovanog korisnika: " + k.getKorisnikid());
+        this.zadaci = zadatakSession.vratiZadatkeKorisnika(k.getKorisnikid());
         return zadaci;
-    }
 
-    public List<String> getSlike() {
-        return slike;
-    }
-
-    public void setSlike(List<String> slike) {
-        this.slike = slike;
-    }
-
-    public Zadatak getZadatak() {
-        return zadatak;
-    }
-
-    public void setZadatak(Zadatak zadatak) {
-        this.zadatak = zadatak;
     }
 
     public void postaviSlikeZadataka() {
@@ -88,12 +69,44 @@ public class RezultatPretrage implements Serializable {
         }
     }
 
+    public List<Zadatak> getZadaci() {
+        return zadaci;
+    }
+
+    public void setZadaci(List<Zadatak> zadaci) {
+        this.zadaci = zadaci;
+    }
+
+    public Zadatak getZadatak() {
+        return zadatak;
+    }
+
+    public void setZadatak(Zadatak zadatak) {
+        this.zadatak = zadatak;
+    }
+
     public String getZadatakID() {
         return zadatakID;
     }
 
     public void setZadatakID(String zadatakID) {
         this.zadatakID = zadatakID;
+    }
+
+    public String getSlika() {
+        return slika;
+    }
+
+    public void setSlika(String slika) {
+        this.slika = slika;
+    }
+
+    public List<String> getSlike() {
+        return slike;
+    }
+
+    public void setSlike(List<String> slike) {
+        this.slike = slike;
     }
 
 }

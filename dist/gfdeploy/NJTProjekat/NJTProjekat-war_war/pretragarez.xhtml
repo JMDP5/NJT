@@ -23,7 +23,9 @@ and open the template in the editor.
                     <h:form id="form1">
                         <h:panelGrid id="userPanel1" columns="2" style="margin: 0 auto;">
                             <h:outputLabel value="Pronajdeni zadaci: " />
+                            
                             <h:selectOneMenu id="zadatak" value="#{rezultat.zadatakID}" title="Zadatak" >
+                                <f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />
                                 <f:selectItems value="#{rezultat.vratiNadjeneZadatke()}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
                                 <f:ajax listener="#{rezultat.postaviSlikeZadataka()}" render="galleria" />

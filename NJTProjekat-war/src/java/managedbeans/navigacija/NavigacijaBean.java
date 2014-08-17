@@ -26,7 +26,7 @@ public class NavigacijaBean {
         if (type == 0) {
             return "radnikmain?faces-redirect=true";
         } else if (type == 1) {
-            return "adminmain?faces-redirect=true";
+            return "obradazadataka?faces-redirect=true";
         }
         return "";
     }

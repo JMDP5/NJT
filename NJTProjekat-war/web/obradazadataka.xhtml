@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>                           
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Obavljanje zadataka</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="form1">
+                        <h1><h:outputText value="Obradi slike: "/></h1>
+                        <p:panelGrid columns="2">
+                            <h:outputLabel value="Pronajdeni zadaci: " />
+
+                            <p:selectOneMenu id="zadatak" value="#{obavljanjezadatka.zadatakID}" >
+                                <!--<f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />-->
+                                <f:selectItems value="#{obavljanjezadatka.vratiZadatkeKorisnika()}" var="z"
+                                               itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
+                                <f:ajax listener="#{obavljanjezadatka.postaviSlikeZadataka()}" render="slike" />
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Slike: " />
+                            <p:selectOneMenu id="slike" value="#{obavljanjezadatka.slika}" >
+                                <!--<f:selectItem itemLabel="Odaberite sliku " itemValue="-1" />-->
+                                <f:selectItems value="#{obavljanjezadatka.slike}" var="s"
+                                               itemLabel="#{s}" itemValue="#{s}"/>
+                                <p:ajax update="gslika"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+                        <br/>
+                        <p:graphicImage id="gslika" value="resources/Images/#{obavljanjezadatka.slika}" width="200" height="200"/>  
+                    </h:form >
+                </f:view>
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
