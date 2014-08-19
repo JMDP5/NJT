@@ -19,22 +19,14 @@ and open the template in the editor.
             <h:form>
                 <h2><h:outputText value="Popunite neophodne podatke za registraciju"/></h2>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Korisnik id:" for="korisnikid" />
-                    <h:inputText id="korisnikid" value="#{korisnik.korisnik.korisnikid}" title="Korisnikid" required="true" requiredMessage="The Korisnikid field is required."/>
                     <h:outputLabel value="Ime:" for="ime" />
                     <h:inputText id="ime" value="#{korisnik.korisnik.ime}" title="Ime" />
-                    <h:outputLabel value="Prezime:" for="prezime" />
-                    <h:inputText id="prezime" value="#{korisnik.korisnik.prezime}" title="Prezime" />
                     <h:outputLabel value="Korisnicko ime:" for="korisnickoime" />
                     <h:inputText id="korisnickoime" value="#{korisnik.korisnik.korisnickoime}" title="Korisnickoime" required="true" requiredMessage="The Korisnickoime field is required."/>
                     <h:outputLabel value="Lozinka:" for="lozinka" />
                     <h:inputText id="lozinka" value="#{korisnik.korisnik.lozinka}" title="Lozinka" required="true" requiredMessage="The Lozinka field is required."/>
                     <h:outputLabel value="Email:" for="email" />
                     <h:inputText id="email" value="#{korisnik.korisnik.email}" title="Email" required="true" requiredMessage="The Email field is required."/>
-                    <h:outputLabel value="Tip korisnika:" for="tipkorisnika" />
-                    <h:inputText id="tipkorisnika" value="#{korisnik.korisnik.tipkorisnika}" title="Tipkorisnika" />
-                    <h:outputLabel value="Status:" for="status" />
-                    <h:inputText id="status" value="#{korisnik.korisnik.status}" title="Status" />
                     <h:outputLabel value="Mesto:" for="mesto" />
                     <h:selectOneMenu id="mesto" value="#{korisnik.mestoId}" title="Mesto" >
                         <f:selectItems value="#{korisnik.vratiMesta()}" var="m"

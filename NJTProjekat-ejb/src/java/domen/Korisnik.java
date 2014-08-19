@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Korisnik.findAll", query = "SELECT k FROM Korisnik k"),
     @NamedQuery(name = "Korisnik.findByKorisnikid", query = "SELECT k FROM Korisnik k WHERE k.korisnikid = :korisnikid"),
     @NamedQuery(name = "Korisnik.findByIme", query = "SELECT k FROM Korisnik k WHERE k.ime = :ime"),
-    @NamedQuery(name = "Korisnik.findByPrezime", query = "SELECT k FROM Korisnik k WHERE k.prezime = :prezime"),
+    @NamedQuery(name = "Korisnik.findByAktivacioniKod", query = "SELECT k FROM Korisnik k WHERE k.aktivacionikod = :aktivacionikod"),
     @NamedQuery(name = "Korisnik.findByKorisnickoime", query = "SELECT k FROM Korisnik k WHERE k.korisnickoime = :korisnickoime"),
     @NamedQuery(name = "Korisnik.findByLozinka", query = "SELECT k FROM Korisnik k WHERE k.lozinka = :lozinka"),
     @NamedQuery(name = "Korisnik.findByEmail", query = "SELECT k FROM Korisnik k WHERE k.email = :email"),
@@ -54,8 +54,8 @@ public class Korisnik implements Serializable {
     @Column(name = "ime")
     private String ime;
     @Size(max = 100)
-    @Column(name = "prezime")
-    private String prezime;
+    @Column(name = "aktivacionikod")
+    private String aktivacionikod;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -112,12 +112,12 @@ public class Korisnik implements Serializable {
         this.ime = ime;
     }
 
-    public String getPrezime() {
-        return prezime;
+    public String getAktivacioniKod() {
+        return aktivacionikod;
     }
 
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
+    public void setAktivacioniKod(String kod) {
+        this.aktivacionikod = kod;
     }
 
     public String getKorisnickoime() {

@@ -71,8 +71,13 @@ public class KorisnikBean implements Serializable {
 
     public void registrujKorisnika() {
         korisnik.setMesto(korisnikSession.vratiMesto(mestoId));
+        korisnik.setTipkorisnika(1); //1 - radnik 2 - menadzer
+        korisnik.setStatus(0); //0 - Neaktivan 1- OK 2-Obrisan
+        korisnik.setAktivacioniKod(vratiAktivacioniKod());
+
         korisnikSession.ubaci(korisnik);
-        posaljiAktivacioniMail();
+
+        posaljiAktivacioniMail(korisnik.getEmail(), korisnik.getAktivacioniKod());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Korisnik unet", "Molimo aktivirajte prvo svoj nalog!"));
     }
 
@@ -99,7 +104,8 @@ public class KorisnikBean implements Serializable {
         this.mestoId = mestoId;
     }
 
-    private void posaljiAktivacioniMail() {
+    private void posaljiAktivacioniMail(String email, String kod) {
+        //Promeni ovo!!
         final String username = "aleksandar.buha05@gmail.com";
         final String password = "Ivana5391";
 
@@ -121,16 +127,28 @@ public class KorisnikBean implements Serializable {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("aleksandar.buha05@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(korisnik.getEmail()));
+                    InternetAddress.parse(email));
             message.setSubject("Registracioni mejl");
-            message.setText("Postovani/a " + korisnik.getIme() + ", \n" +
-                    "Molimo Vas prvo aktivirajte svoj nalog klikom na link: "
-                    + "\n\n http://localhost:8080/NJTProjekat-war/faces/aktivacija.xhtml?key=" + korisnik.getKorisnickoime());
+            message.setText("Postovani/a " + korisnik.getIme() + ", \n"
+                    + "Molimo Vas prvo aktivirajte svoj nalog klikom na link: "
+                    + "\n\n http://localhost:8080/NJTProjekat-war/faces/aktivacija.xhtml?key=" + kod);
 
             Transport.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String vratiAktivacioniKod() {
+        StringBuilder buffer = new StringBuilder();
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        int charactersLength = characters.length();
+
+        for (int i = 0; i < 9; i++) {
+            double index = Math.random() * charactersLength;
+            buffer.append(characters.charAt((int) index));
+        }
+        return buffer.toString();
     }
 
 }

@@ -81,8 +81,8 @@ public class KorisnikSession {
     }
 
     public void aktivirajNalog(String key) {
-        Query query = em.createQuery("UPDATE Korisnik k SET k.status = 666 WHERE k.korisnickoime = :korisnickoime");
-        query.setParameter("korisnickoime", key);
+        Query query = em.createQuery("UPDATE Korisnik k SET k.status = 1 WHERE k.aktivacionikod = :aktivacionikod");
+        query.setParameter("aktivacionikod", key);
         query.executeUpdate();
     }
 
