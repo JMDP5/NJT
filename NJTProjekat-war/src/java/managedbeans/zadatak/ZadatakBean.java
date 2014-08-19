@@ -72,6 +72,8 @@ public class ZadatakBean implements Serializable {
         zadatak.setSlikaList(slike);
         FacesContext context = FacesContext.getCurrentInstance();
         try {
+            //http://stackoverflow.com/questions/17922620/jpa-persist-foreign-key-restriction-violation
+            http://stackoverflow.com/questions/12368127/why-am-i-getting-foreign-key-constraint-fails-exception-on-persist
             zadatakSession.sacuvajZadatak(zadatak);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zadatak sacuvan!"));
             postaviZadatakID();
@@ -95,7 +97,8 @@ public class ZadatakBean implements Serializable {
             Slika s = new Slika(pk);
             s.setNaziv(file.getFileName());
             slike.add(s);
-            FacesMessage message = new FacesMessage("Slika " + file.getFileName() + " is uploaded.");
+            System.out.println("Dodata slika: " + file.getFileName());
+            FacesMessage message = new FacesMessage("Slika " + s.getNaziv() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
 
         } else {

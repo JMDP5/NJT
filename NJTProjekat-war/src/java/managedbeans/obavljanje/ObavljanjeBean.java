@@ -22,7 +22,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import session.zadatak.ZadatakSession;
 
-
 /**
  *
  * @author aleksandar
@@ -96,7 +95,12 @@ public class ObavljanjeBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
         Korisnik k = (Korisnik) session.getAttribute("korisnik");
-        System.out.println("Id ulogovanog korisnika: " + k.getKorisnikid());
+        try {
+            System.out.println("Id ulogovanog korisnika: " + k.getKorisnikid());
+        } catch (Exception e) {
+            throw new RuntimeException("Niste ulogovani!!");
+        }
+
         this.zadaci = zadatakSession.vratiZadatkeKorisnika(k.getKorisnikid());
         return zadaci;
 

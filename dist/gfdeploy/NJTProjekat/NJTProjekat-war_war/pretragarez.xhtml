@@ -23,17 +23,25 @@ and open the template in the editor.
                     <h:form id="form1">
                         <h:panelGrid id="userPanel1" columns="2" style="margin: 0 auto;">
                             <h:outputLabel value="Pronajdeni zadaci: " />
-                            
+
                             <h:selectOneMenu id="zadatak" value="#{rezultat.zadatakID}" title="Zadatak" >
                                 <f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />
                                 <f:selectItems value="#{rezultat.vratiNadjeneZadatke()}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
-                                <f:ajax listener="#{rezultat.postaviSlikeZadataka()}" render="galleria" />
+                                <f:ajax listener="#{rezultat.postaviSlikeZadataka()}" render="galleria opisField statusField rokField" />
                             </h:selectOneMenu>
 
-                            <h:outputLabel value="Slike: " />
+                            <h:outputLabel value="Opis: " />
+                            <h:inputText value="#{rezultat.zadatak.opis}" id="opisField" readonly="true"/>
 
-                            <p:galleria id="galleria" value="#{rezultat.slike}" var="slika" panelWidth="250" panelHeight="200" showCaption="true">
+                            <h:outputLabel value="Status: " />
+                            <h:inputText value="#{rezultat.zadatak.status}" id="statusField" readonly="true"/>                            
+
+                            <h:outputLabel value="Rok za izvrsenje: " />
+                            <p:calendar value="#{rezultat.zadatak.rokzaizvrsenje}" id="rokField" pattern="yyyy-MM-dd" disabled="true"/>
+
+                            <h:outputLabel value="Slike: " />
+                            <p:galleria id="galleria" value="#{rezultat.slike}" var="slika" panelWidth="250" panelHeight="200" showCaption="false" effectSpeed="3000" >
                                 <p:graphicImage name="Images/#{slika}" width="250" height="200" title="#{slika}"/>
                             </p:galleria>
                             <h:commandLink action="pretraga?faces-redirect=true" value="Nazad na pretragu"></h:commandLink>

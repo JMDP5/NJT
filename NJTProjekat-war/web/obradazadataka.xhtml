@@ -49,7 +49,7 @@ and open the template in the editor.
                         <p:growl id="msg" showDetail="true" escape="false" />
                         <h3 style="margin-top: 0">Filteri za preprocesiranje</h3>
                         <p:pickList id="pickList" value="#{obavljanjezadatka.filteri}" var="f" itemLabel="#{f}" itemValue="#{f}" />
-                        <p:commandButton id="filterSubmit" value="Submit" update="progress" onclick="PF('filterDialog').show();PF('pbAjax').start()" style="margin-top:5px" />
+                        <p:commandButton id="filterSubmit" value="Primeni filtere" update="progress" onclick="PF('filterDialog').show();PF('pbAjax').start()" style="margin-top:5px" />
 
                         <p:dialog id="dialog" modal="true" showEffect="fade" hideEffect="fade" header="Obrada u toku..." widgetVar="filterDialog" width="200">
                         <p:growl id="progressMessage" />
