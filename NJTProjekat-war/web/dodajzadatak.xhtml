@@ -46,13 +46,15 @@ and open the template in the editor.
                         <p:growl id="messages" showDetail="true" />
 
                         <p:fileUpload value="#{zadatak.file}" mode="simple"/>
-
-                        <p:commandButton value="Dodaj sliku" ajax="true" actionListener="#{zadatak.upload()}">
-
-                            <!--Ne treba da se refreshuje strana kad dodam sliku-->
-                            <f:ajax execute="form2" render="form2" />
-                            <!--<f:ajax listener="{zadatak.postaviSlikeZadataka()}" render="galleria" />-->
-                        </p:commandButton>
+                       
+                        
+                        <h:commandButton value="Dodaj sliku" action="#{zadatak.upload}">
+                            <f:ajax execute="@form" render="@none" />
+                        </h:commandButton>
+                        <!--<p:commandButton value="Submit" ajax="true" update="messages" actionListener="{zadatak.upload}" styleClass="ui-priority-primary"/>-->
+                        <!--<h:commandButton value="Dodaj sliku" action="{zadatak.upload()}">-->
+                        <!--<f:ajax execute="@form" render="@none" />-->
+                        <!--</h:commandButton>-->
 
                     </h:form>
                 </f:view>

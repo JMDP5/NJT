@@ -8,15 +8,20 @@ package managedbeans.obavljanje;
 import domen.Korisnik;
 import domen.Slika;
 import domen.Zadatak;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
+import org.primefaces.model.DualListModel;
 import session.zadatak.ZadatakSession;
+
 
 /**
  *
@@ -34,11 +39,56 @@ public class ObavljanjeBean implements Serializable {
     private String zadatakID;
     private List<String> slike;
     private String slika;
+    private DualListModel<String> filteri;
+    private Integer progress;
+
+    public Integer getProgress() {
+        if (progress == null) {
+            progress = 0;
+        } else {
+            progress = progress + (int) (Math.random() * 60);
+
+            if (progress > 100) {
+                progress = 100;
+            }
+        }
+
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
+
+    public void onComplete() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("filterDialog.hide();");
+        cancel();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Progress Completed"));
+
+    }
+
+    public void cancel() {
+        progress = null;
+    }
 
     /**
      * Creates a new instance of ObavljanjeBean
      */
     public ObavljanjeBean() {
+    }
+
+    @PostConstruct
+    public void init() {
+        List<String> izvorniFilteri = new ArrayList<String>();
+        List<String> odabraniFilteri = new ArrayList<String>();
+
+        izvorniFilteri.add("Grayscale");
+        izvorniFilteri.add("Binarizacija");
+        izvorniFilteri.add("Median filter");
+        izvorniFilteri.add("Histogram equalization");
+
+        filteri = new DualListModel<>(izvorniFilteri, odabraniFilteri);
     }
 
     public List<Zadatak> vratiZadatkeKorisnika() {
@@ -107,6 +157,14 @@ public class ObavljanjeBean implements Serializable {
 
     public void setSlike(List<String> slike) {
         this.slike = slike;
+    }
+
+    public DualListModel<String> getFilteri() {
+        return filteri;
+    }
+
+    public void setFilteri(DualListModel<String> filteri) {
+        this.filteri = filteri;
     }
 
 }

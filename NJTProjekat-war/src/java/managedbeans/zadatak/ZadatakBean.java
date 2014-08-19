@@ -16,12 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.servlet.http.Part;
 import org.primefaces.model.UploadedFile;
 import session.zadatak.ZadatakSession;
 
@@ -30,7 +28,7 @@ import session.zadatak.ZadatakSession;
  * @author aleksandar
  */
 @Named(value = "zadatak")
-@SessionScoped
+@ViewScoped
 public class ZadatakBean implements Serializable {
 
     @EJB
@@ -39,7 +37,6 @@ public class ZadatakBean implements Serializable {
     int numImages;
     private Zadatak zadatak;
     List<Slika> slike;
-    String zadatakId;
     private UploadedFile file;
 
     /**
@@ -50,9 +47,9 @@ public class ZadatakBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        //Kad je viewScoped ovo se ne poziva nakon ajax poziva...
         zadatak = new Zadatak();
-        numImages = 0;
-        slike = new ArrayList<>();
+        //slike = new ArrayList<>();
         postaviZadatakID();
     }
 
@@ -85,18 +82,24 @@ public class ZadatakBean implements Serializable {
     }
 
     private void postaviZadatakID() {
-        zadatakId = String.valueOf(zadatakSession.vratiSledeciIdZadatka());
+        this.zadatak.setZadatakid(zadatakSession.vratiSledeciIdZadatka());
     }
 
     public void upload() {
+        if (slike == null) {
+            slike = new ArrayList<>();
+        }
         if (file != null) {
-            SlikaPK pk = new SlikaPK(Integer.parseInt(zadatakId), ++numImages);
+            SlikaPK pk = new SlikaPK(this.zadatak.getZadatakid(), ++numImages);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodata " + numImages + " slika!"));
             Slika s = new Slika(pk);
             s.setNaziv(file.getFileName());
             slike.add(s);
-            FacesMessage message = new FacesMessage("Slika ", file.getFileName() + " is uploaded.");
+            FacesMessage message = new FacesMessage("Slika " + file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
 
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nije dodata slika!"));
         }
     }
 
