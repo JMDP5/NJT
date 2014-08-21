@@ -89,10 +89,6 @@ public class PretragaZadataka implements Serializable {
 
     }
     
-    public String izmeni() {
-        return "izmenabrisanje?faces-redirect=true";
-    }
-
     public void pronajdiZadatak() {
         SimpleDateFormat sdf
                 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

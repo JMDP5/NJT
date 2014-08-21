@@ -24,12 +24,11 @@ and open the template in the editor.
                         <h:panelGrid id="userPanel1" columns="2" style="margin: 0 auto;">
                             <h:outputLabel value="Pronajdeni zadaci: " />
 
-                            <h:selectOneMenu id="zadatak" value="#{rezultat.zadatakID}" title="Zadatak" >
-                                <f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />
+                            <p:selectOneMenu id="zadatak" value="#{rezultat.zadatakID}" >
                                 <f:selectItems value="#{rezultat.vratiNadjeneZadatke()}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
                                 <f:ajax listener="#{rezultat.postaviSlikeZadataka()}" render="galleria opisField statusField rokField" />
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
 
                             <h:outputLabel value="Opis: " />
                             <h:inputText value="#{rezultat.zadatak.opis}" id="opisField" readonly="true"/>
@@ -44,9 +43,11 @@ and open the template in the editor.
                             <p:galleria id="galleria" value="#{rezultat.slike}" var="slika" panelWidth="250" panelHeight="200" showCaption="false" effectSpeed="3000" >
                                 <p:graphicImage name="Images/#{slika}" width="250" height="200" title="#{slika}"/>
                             </p:galleria>
+                            <h:commandButton value="Izmeni zadatak" action="#{rezultat.izmeni()}"></h:commandButton>
+                            <h:commandButton value="Obrisi zadatak" action="#{rezultat.obrisi()}"></h:commandButton>
                             <h:commandLink action="pretraga?faces-redirect=true" value="Nazad na pretragu"></h:commandLink>
                         </h:panelGrid>
-                        <p:messages showDetail="true" />
+                         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     </h:form>
                 </f:view>
             </ui:define>

@@ -11,13 +11,17 @@ import domen.Zadatak;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import session.zadatak.ZadatakSession;
 
 /**
  *
@@ -26,6 +30,9 @@ import javax.servlet.http.HttpSession;
 @Named(value = "rezultat")
 @SessionScoped
 public class RezultatPretrage implements Serializable {
+
+    @EJB
+    private ZadatakSession zadatakSession;
 
     private List<Zadatak> zadaci;
     private Zadatak zadatak;
@@ -55,20 +62,27 @@ public class RezultatPretrage implements Serializable {
         return zadaci;
     }
 
-    public List<String> getSlike() {
-        return slike;
+    public String izmeni() {
+        return "izmenabrisanje?faces-redirect=true";
     }
 
-    public void setSlike(List<String> slike) {
-        this.slike = slike;
-    }
-
-    public Zadatak getZadatak() {
-        return zadatak;
-    }
-
-    public void setZadatak(Zadatak zadatak) {
-        this.zadatak = zadatak;
+    public void obrisi() {
+        int id = Integer.parseInt(zadatakID);
+        if (zadatakSession.obrisiZadatak(id)) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+            ListIterator<Zadatak> itr = zadaci.listIterator();
+            while(itr.hasNext()) {
+                Zadatak z = itr.next();
+                if (z.getZadatakid().equals(id)) {
+                    zadaci.remove(z);
+                }
+            }
+            session.setAttribute("rezultat", zadaci);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "Zadatak uspesno obrisan!"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "Zadatak nije obrisan!!"));
+        }
     }
 
     public void postaviSlikeZadataka() {
@@ -84,7 +98,8 @@ public class RezultatPretrage implements Serializable {
             slike.add(s.getNaziv());
         }
         if (slike.isEmpty()) {
-            slike.add("Nema slika");
+            slike.add("noimage.jpg");
+
         }
     }
 
@@ -94,6 +109,22 @@ public class RezultatPretrage implements Serializable {
 
     public void setZadatakID(String zadatakID) {
         this.zadatakID = zadatakID;
+    }
+
+    public List<String> getSlike() {
+        return slike;
+    }
+
+    public void setSlike(List<String> slike) {
+        this.slike = slike;
+    }
+
+    public Zadatak getZadatak() {
+        return zadatak;
+    }
+
+    public void setZadatak(Zadatak zadatak) {
+        this.zadatak = zadatak;
     }
 
 }

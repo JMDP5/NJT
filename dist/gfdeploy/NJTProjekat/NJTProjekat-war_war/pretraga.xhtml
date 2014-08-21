@@ -29,12 +29,9 @@ and open the template in the editor.
                             <h:outputLabel value="Rok " />
                             <p:calendar value="#{pretraga.rok}" mode="popup" pattern="yyyy-MM-dd"/>
                             <h:outputLabel value="Slike: " />
-                            <p:galleria value="#{pretraga.slike}" var="slika" panelWidth="250" panelHeight="200" showCaption="true">
-                                <p:graphicImage name="Images/#{slika}" width="250" height="200" title="#{slika}"/>
-                            </p:galleria>
                             <h:commandButton value="Pretrazi" action="#{pretraga.pretrazi()}"></h:commandButton>
                             <!--Ovo dole treba da se pojavi kada se klikne pretrazi-->
-                            <h:commandButton value="Izmeni zadatak" action="#{pretraga.izmeni()}"></h:commandButton>
+                            
                             
                             
                         </h:panelGrid>

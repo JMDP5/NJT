@@ -82,4 +82,11 @@ public class ZadatakSession {
         return zadaci;
     }
 
+    public boolean obrisiZadatak(int id) {
+        Query query = em.createQuery("DELETE FROM Zadatak z WHERE z.zadatakid='" + id + "'");
+        int res = query.executeUpdate();
+        return res > 0;
+
+    }
+
 }

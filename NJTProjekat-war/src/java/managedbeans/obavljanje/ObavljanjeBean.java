@@ -120,6 +120,10 @@ public class ObavljanjeBean implements Serializable {
         }
         if (slike.isEmpty()) {
             slike.add("Nema slika");
+            slika = "noimage.jpg";
+        }
+        else{
+            slika = slike.get(0);   
         }
     }
 

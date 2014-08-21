@@ -30,19 +30,19 @@ and open the template in the editor.
                             <h:outputLabel value="Napomena:" for="napomena" />
                             <h:inputTextarea rows="4" cols="30" id="napomena" value="#{zaduzenje.zaduzenje.napomena}" title="Napomena" />
                             <h:outputLabel value="Zadatak:" for="zadatak" />
-                            <h:selectOneMenu id="zadatak" value="#{zaduzenje.zadatakId}" title="Zadatak" required="true" requiredMessage="The Zadatak field is required.">
+                            <p:selectOneMenu id="zadatak" value="#{zaduzenje.zadatakId}" required="true" requiredMessage="The Zadatak field is required.">
                                 <f:selectItem itemLabel="Odaberite zadatak: " itemValue="" />
                                 <f:selectItems value="#{zaduzenje.vratiSveZadatke()}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
 
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
                             <h:outputLabel value="Korisnik:" for="korisnik" />
-                            <h:selectOneMenu id="korisnik" value="#{zaduzenje.korisnikId}" title="Korisnik" required="true" requiredMessage="The Korisnik field is required.">
+                            <p:selectOneMenu id="korisnik" value="#{zaduzenje.korisnikId}" required="true" requiredMessage="The Korisnik field is required.">
 
                                 <f:selectItem itemLabel="Odaberi korisnika" itemValue="" />
                                 <f:selectItems value="#{zaduzenje.vratiSveKorisnike()}" var="k"
                                                itemLabel="#{k.ime}" itemValue="#{k.korisnikid}"/>
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
                             <p:commandButton value="Dodaj zaduzenje" id="submit" actionListener="#{zaduzenje.sacuvajZaduzenje()}" type="submit"/>
                         </h:panelGrid>
                         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />

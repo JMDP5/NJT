@@ -29,7 +29,7 @@ and open the template in the editor.
                                 <!--<f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />-->
                                 <f:selectItems value="#{obavljanjezadatka.vratiZadatkeKorisnika()}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
-                                <f:ajax listener="#{obavljanjezadatka.postaviSlikeZadataka()}" render="slike" />
+                                <f:ajax listener="#{obavljanjezadatka.postaviSlikeZadataka()}" render="slike gslika"/>
                             </p:selectOneMenu>
 
                             <h:outputLabel value="Slike: " />
