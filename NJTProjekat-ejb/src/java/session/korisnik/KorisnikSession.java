@@ -37,16 +37,15 @@ public class KorisnikSession {
         return query.getResultList();
     }
 
-    public Object vratiKorisnikaizBaze(String username) {
+    public Korisnik vratiKorisnikaizBaze(String username) {
         Query q = em.createNamedQuery("Korisnik.findByKorisnickoime");
         q.setParameter("korisnickoime", username);
         Object result = null;
         try {
             result = q.getSingleResult();
-            return result;
+            return (Korisnik) result;
         } catch (NoResultException ex) {
             System.out.println(ex.getMessage());
-            //ex.printStackTrace();
         }
         return null;
     }
@@ -81,9 +80,24 @@ public class KorisnikSession {
     }
 
     public void aktivirajNalog(String key) {
+        //em.merge(k); k je korisnik sa promenjenim id-ijem.
         Query query = em.createQuery("UPDATE Korisnik k SET k.status = 1 WHERE k.aktivacionikod = :aktivacionikod");
         query.setParameter("aktivacionikod", key);
         query.executeUpdate();
+    }
+
+    public void promeniKorisnika(Korisnik k) {
+        em.merge(k);
+    }
+
+    public Korisnik pronadjiKorisnikaPoKodu(String kod) {
+        Query q = em.createNamedQuery("Korisnik.findByAktivacioniKod");
+        q.setParameter("aktivacionikod", kod);
+        List l = q.getResultList();
+        if (l != null && l.size() != 0) {
+            return (Korisnik) l.get(0);
+        }
+        return null;
     }
 
 }

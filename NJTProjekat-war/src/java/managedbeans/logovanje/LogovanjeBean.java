@@ -53,18 +53,26 @@ public class LogovanjeBean implements Serializable {
     }
 
     public String ulogujKorisnika() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-        Object rez = korisnikSession.vratiKorisnikaizBaze(korisnickoime);
-        if (rez != null) {
-            Korisnik trenutniKorisnik = (Korisnik) rez;
-            if (loznika.equals(trenutniKorisnik.getLozinka())) {
-                //Proveri prvo da li je korisnik ili administrator!
-                session.setAttribute("korisnik", trenutniKorisnik);
-                return NavigacijaBean.redirect(1);
-            }
+
+        Korisnik k = korisnikSession.vratiKorisnikaizBaze(korisnickoime);
+        if (k == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Ne postoji korisnik sa unesenim korisnickim imenom. "));
         } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Logovanje neuspesno!!"));
+            if (!loznika.equals(k.getLozinka())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, null, "Pogresna sifra!"));
+            } else if (k.getStatus() != 1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Vas nalog nije aktivan. Prvo aktivirajte nalog."));
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+                session.setAttribute("korisnik", k);
+                if (k.getTipkorisnika() == 1) { // Radnik -- tipKorisnika = 1
+                    return "obradazadataka?faces-redirect=true";
+                } else {
+                    return "dodajzadatak?faces-redirect=true";
+
+                }
+            }
         }
         return null;
     }

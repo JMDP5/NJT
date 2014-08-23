@@ -18,10 +18,10 @@ and open the template in the editor.
         <ui:composition>
             <h:form>
                 <p:menubar >  
-                    <p:menuitem value="Obrada zadataka" url="faces/obradazadataka.xhtml" />  
-                    <p:menuitem value="Dodaj novi zadatak" url="faces/dodajzadatak.xhtml" />  
-                    <p:menuitem value="Pregled zadataka" url="faces/pretraga.xhtml" />  
-                    <p:menuitem value="Dodeli zadatak radniku" url="faces/dodajzaduzenje.xhtml" />  
+                    <p:menuitem value="Obrada zadataka" action="obradazadataka.xhtml?faces-redirect=true"/>  
+                    <p:menuitem value="Dodaj novi zadatak" action="dodajzadatak.xhtml?faces-redirect=true"/>  
+                    <p:menuitem value="Pregled zadataka" action="pretraga.xhtml?faces-redirect=true"/>  
+                    <p:menuitem value="Dodeli zadatak radniku" action="dodajzaduzenje.xhtml?faces-redirect=true" />  
                     <p:submenu label="Profil" icon="ui-icon-gear">  
                         <p:menuitem value="Moj nalog" url="faces/profilkorisnika.xhtml" />  
                         <p:menuitem value="Odjavi se" action="#{logovanje.odjaviKorisnika()}"/>  

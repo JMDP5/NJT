@@ -59,6 +59,8 @@ public class RezultatPretrage implements Serializable {
         for (Object z : l) {
             zadaci.add((Zadatak) z);
         }
+        zadatakID = String.valueOf(zadaci.get(0).getZadatakid());
+        postaviSlikeZadataka();
         return zadaci;
     }
 

@@ -9,12 +9,31 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>TODO supply a title</title>
+        <title>Profil</title>
     </h:head>
     <h:body>
-        <p>TODO write content</p>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="form1">
+                        <h:panelGrid id="userPanel1" columns="2" style="margin: 0 auto;">
+                            <h:outputLabel value="Ime: " for="ime" />
+                            <h:inputText value="#{profil.ulogovaniKorisnik.ime}" id="ime"/>
+                            <h:outputLabel value="Mesto: " for="mesto" />
+                            <h:inputText value="#{profil.ulogovaniKorisnik.mesto.nazivmesta}" id="mesto"/>
+
+
+
+                        </h:panelGrid>
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
