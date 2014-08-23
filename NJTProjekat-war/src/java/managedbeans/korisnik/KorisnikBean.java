@@ -105,9 +105,8 @@ public class KorisnikBean implements Serializable {
     }
 
     private void posaljiAktivacioniMail(String email, String kod) {
-        //Promeni ovo!!
-        final String username = "aleksandar.buha05@gmail.com";
-        final String password = "Ivana5391";
+        final String username = "njtprojekatfon@gmail.com";
+        final String password = "njtprojekat";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -125,7 +124,7 @@ public class KorisnikBean implements Serializable {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("aleksandar.buha05@gmail.com"));
+            message.setFrom(new InternetAddress("njtprojekatfon@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
             message.setSubject("Registracioni mejl");

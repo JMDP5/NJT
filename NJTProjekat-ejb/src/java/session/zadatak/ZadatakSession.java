@@ -29,10 +29,12 @@ public class ZadatakSession {
 
     public void persist(Object object) {
         em.persist(object);
+        em.flush();
     }
 
     public void sacuvajZadatak(Zadatak z) {
         em.persist(z);
+        em.flush();
     }
 
     public Integer vratiSledeciIdZadatka() {

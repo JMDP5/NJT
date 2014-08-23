@@ -20,6 +20,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import session.zadatak.ZadatakSession;
 
@@ -38,6 +39,7 @@ public class ZadatakBean implements Serializable {
     private Zadatak zadatak;
     List<Slika> slike;
     private UploadedFile file;
+    private String slika;
 
     /**
      * Creates a new instance of ZadatakBean
@@ -76,6 +78,8 @@ public class ZadatakBean implements Serializable {
             http://stackoverflow.com/questions/12368127/why-am-i-getting-foreign-key-constraint-fails-exception-on-persist
             zadatakSession.sacuvajZadatak(zadatak);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zadatak sacuvan!"));
+            slike = new ArrayList<>();
+            numImages = 0;
             postaviZadatakID();
 
         } catch (Exception ex) {
@@ -93,7 +97,7 @@ public class ZadatakBean implements Serializable {
         }
         if (file != null) {
             SlikaPK pk = new SlikaPK(this.zadatak.getZadatakid(), ++numImages);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodata " + numImages + " slika!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodata " + numImages + " slika! Slike size: " + slike.size()));
             Slika s = new Slika(pk);
             s.setNaziv(file.getFileName());
             slike.add(s);
@@ -106,12 +110,36 @@ public class ZadatakBean implements Serializable {
         }
     }
 
+    public void handleFileUpload(FileUploadEvent event) {
+        if (slike == null) {
+            slike = new ArrayList<>();
+        }
+
+        SlikaPK pk = new SlikaPK(this.zadatak.getZadatakid(), ++numImages);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodata " + numImages + " slika!"));
+        Slika s = new Slika(pk);
+        s.setNaziv(event.getFile().getFileName());
+        slike.add(s);
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
     public UploadedFile getFile() {
         return file;
     }
 
     public void setFile(UploadedFile file) {
         this.file = file;
+        this.slika = file.getFileName();
+    }
+
+    public String getSlika() {
+        return slika;
+    }
+
+    public void setSlika(String slika) {
+        this.slika = slika;
     }
 
 }

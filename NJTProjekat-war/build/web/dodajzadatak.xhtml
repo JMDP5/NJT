@@ -37,25 +37,23 @@ and open the template in the editor.
                             <!--Preview image before it's uploaded-->
                             <!--http://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded?lq=1-->
 
-                            <p:commandButton value="Sacuvaj zadatak" id="submit" actionListener="#{zadatak.sacuvajZadatak()}" type="submit" />
-                        </p:panelGrid>
 
+                        </p:panelGrid>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Sacuvaj zadatak" id="submit" actionListener="#{zadatak.sacuvajZadatak()}" type="submit" />
                     </h:form >
                     <br/>
                     <h:form id="form2" enctype="multipart/form-data">
                         <p:growl id="messages" showDetail="true" />
 
-                        <p:fileUpload value="#{zadatak.file}" mode="simple"/>
-                       
-                        
-                        <h:commandButton value="Dodaj sliku" action="#{zadatak.upload}">
-                            <f:ajax execute="@form" render="@none" />
-                        </h:commandButton>
-                        <!--<p:commandButton value="Submit" ajax="true" update="messages" actionListener="{zadatak.upload}" styleClass="ui-priority-primary"/>-->
-                        <!--<h:commandButton value="Dodaj sliku" action="{zadatak.upload()}">-->
-                        <!--<f:ajax execute="@form" render="@none" />-->
-                        <!--</h:commandButton>-->
+                        <p:fileUpload value="#{zadatak.file}" fileUploadListener="#{zadatak.handleFileUpload}" 
+                                      mode="advanced" multiple="true"/>
 
+                        <!--                        <h:commandButton value="Dodaj sliku" action="{zadatak.upload}">
+                                                    <f:ajax execute="@form" render="@none" />
+                                                </h:commandButton>-->
                     </h:form>
                 </f:view>
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />

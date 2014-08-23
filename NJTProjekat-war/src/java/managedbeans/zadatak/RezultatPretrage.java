@@ -76,8 +76,8 @@ public class RezultatPretrage implements Serializable {
             ListIterator<Zadatak> itr = zadaci.listIterator();
             while(itr.hasNext()) {
                 Zadatak z = itr.next();
-                if (z.getZadatakid().equals(id)) {
-                    zadaci.remove(z);
+                if (z.getZadatakid() == id) {
+                    itr.remove();
                 }
             }
             session.setAttribute("rezultat", zadaci);
