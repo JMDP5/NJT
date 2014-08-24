@@ -8,14 +8,25 @@ package managedbeans.obavljanje;
 import domen.Korisnik;
 import domen.Slika;
 import domen.Zadatak;
+import imageprocessing.EdgeDetection;
+import imageprocessing.HistogramEqualizationFilter;
+import imageprocessing.ImageFilter;
+import imageprocessing.MedianFilter;
+import imageprocessing.OtsuBinarizeFilter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
@@ -79,13 +90,13 @@ public class ObavljanjeBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        List<String> izvorniFilteri = new ArrayList<String>();
-        List<String> odabraniFilteri = new ArrayList<String>();
+        List<String> izvorniFilteri = new ArrayList<>();
+        List<String> odabraniFilteri = new ArrayList<>();
 
-        izvorniFilteri.add("Grayscale");
-        izvorniFilteri.add("Binarizacija");
+        izvorniFilteri.add("Otsu Binarizacija");
         izvorniFilteri.add("Median filter");
-        izvorniFilteri.add("Histogram equalization");
+        izvorniFilteri.add("Grayscale");
+        izvorniFilteri.add("Edge Detection");
 
         filteri = new DualListModel<>(izvorniFilteri, odabraniFilteri);
     }
@@ -106,6 +117,30 @@ public class ObavljanjeBean implements Serializable {
 
     }
 
+    public void primeniFiltere() {
+        List<String> odabraniFilteri = filteri.getTarget();
+        for (String imageFilter : odabraniFilteri) {
+            try {
+                //***** Promeni ovu putanju!!!
+                BufferedImage s = ImageIO.read(new File("/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/resources/Images/" + slika));
+                BufferedImage processedImage = new EdgeDetection().processImage(s);
+                String naziv = slika + "_" + imageFilter;
+                File outputfile = new File("/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/resources/Images/" + naziv);
+                ImageIO.write(processedImage, "png", outputfile);
+                
+                //******Sredi ovo!!
+                Slika sl = new Slika();
+                sl.setNaziv(naziv);
+                zadatak.getSlikaList().add(sl);
+                slika = naziv;
+                slike.add(naziv);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
     public void postaviSlikeZadataka() {
         System.out.println("postavi slike za zadatak " + zadatakID);
         int id = Integer.parseInt(zadatakID);
@@ -121,9 +156,8 @@ public class ObavljanjeBean implements Serializable {
         if (slike.isEmpty()) {
             slike.add("Nema slika");
             slika = "noimage.jpg";
-        }
-        else{
-            slika = slike.get(0);   
+        } else {
+            slika = slike.get(0);
         }
     }
 
@@ -174,5 +208,5 @@ public class ObavljanjeBean implements Serializable {
     public void setFilteri(DualListModel<String> filteri) {
         this.filteri = filteri;
     }
-
+    
 }

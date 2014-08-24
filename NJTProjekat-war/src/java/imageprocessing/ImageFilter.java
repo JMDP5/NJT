@@ -6,10 +6,12 @@
 
 package imageprocessing;
 
+import java.awt.image.BufferedImage;
+
 /**
- *
- * @author aleksandar
+ * Interface for image filter s
+ * @author Aleksandar
  */
 public interface ImageFilter {
-    
+    public BufferedImage processImage(BufferedImage image);
 }
