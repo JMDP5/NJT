@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package domen;
 
 import java.io.Serializable;
@@ -44,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Korisnik.findByTipkorisnika", query = "SELECT k FROM Korisnik k WHERE k.tipkorisnika = :tipkorisnika"),
     @NamedQuery(name = "Korisnik.findByStatus", query = "SELECT k FROM Korisnik k WHERE k.status = :status")})
 public class Korisnik implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +66,6 @@ public class Korisnik implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "lozinka")
     private String lozinka;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -199,7 +198,7 @@ public class Korisnik implements Serializable {
 
     @Override
     public String toString() {
-        return "domen.Korisnik[ korisnikid=" + korisnikid + " Ime: " + ime +" +]";
+        return "domen.Korisnik[ korisnikid=" + korisnikid + " Ime: " + ime + " +]";
     }
-    
+
 }

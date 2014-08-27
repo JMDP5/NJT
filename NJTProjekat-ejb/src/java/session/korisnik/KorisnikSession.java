@@ -30,6 +30,7 @@ public class KorisnikSession {
 
     public void persist(Object object) {
         em.persist(object);
+        em.flush();
     }
 
     public List<Korisnik> vratiSveKorisnike() {
@@ -57,7 +58,12 @@ public class KorisnikSession {
 
     public Korisnik ubaci(Korisnik k) {
         System.out.println(k.getKorisnikid() + " " + k.getIme());
-        em.persist(k);
+        try {
+            em.persist(k);
+            em.flush();
+        } catch (Exception e) {
+            throw e;
+        }
         return k;
     }
 
@@ -77,6 +83,7 @@ public class KorisnikSession {
 
     public void zapamtiZaduzenje(Zaduzenje z) {
         em.persist(z);
+        em.flush();
     }
 
     public void aktivirajNalog(String key) {

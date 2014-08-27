@@ -11,6 +11,7 @@ import domen.SlikaPK;
 import domen.Zadatak;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.validation.constraints.Future;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import session.zadatak.ZadatakSession;
@@ -37,6 +39,16 @@ public class ZadatakBean implements Serializable {
 
     int numImages;
     private Zadatak zadatak;
+    @Future
+    private Date datum;
+
+    public Date getDatum() {
+        return datum;
+    }
+
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
     List<Slika> slike;
     private UploadedFile file;
     private String slika;
@@ -72,12 +84,13 @@ public class ZadatakBean implements Serializable {
     public void sacuvajZadatak() {
 
         zadatak.setSlikaList(slike);
+        zadatak.setRokzaizvrsenje(datum);
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             //http://stackoverflow.com/questions/17922620/jpa-persist-foreign-key-restriction-violation
             http://stackoverflow.com/questions/12368127/why-am-i-getting-foreign-key-constraint-fails-exception-on-persist
             zadatakSession.sacuvajZadatak(zadatak);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zadatak sacuvan!"));
+            FacesContext.getCurrentInstance().addMessage("form1:rok", new FacesMessage("Zadatak sacuvan!"));
             slike = new ArrayList<>();
             numImages = 0;
             postaviZadatakID();

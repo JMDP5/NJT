@@ -90,5 +90,10 @@ public class ZadatakSession {
         return res > 0;
 
     }
+    
+    public void izmeniZadatak(Zadatak z) {
+        em.merge(z);
+        
+    }
 
 }

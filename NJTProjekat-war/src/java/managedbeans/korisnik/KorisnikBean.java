@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -32,7 +32,7 @@ import session.korisnik.KorisnikSession;
  * @author aleksandar
  */
 @Named(value = "korisnik")
-@SessionScoped
+@ViewScoped
 public class KorisnikBean implements Serializable {
 
     @EJB
@@ -40,6 +40,8 @@ public class KorisnikBean implements Serializable {
 
     private Korisnik korisnik;
     private String mestoId;
+    private String email;
+    private String username;
 
     /**
      * Creates a new instance of KorisnikBean
@@ -50,6 +52,7 @@ public class KorisnikBean implements Serializable {
     @PostConstruct
     public void init() {
         korisnik = new Korisnik();
+
     }
 
     public List<Korisnik> vratiSveKorisnike() {
@@ -70,15 +73,19 @@ public class KorisnikBean implements Serializable {
     }
 
     public void registrujKorisnika() {
-        korisnik.setMesto(korisnikSession.vratiMesto(mestoId));
-        korisnik.setTipkorisnika(1); //1 - radnik 2 - menadzer
-        korisnik.setStatus(0); //0 - Neaktivan 1- OK 2-Obrisan
-        korisnik.setAktivacioniKod(vratiAktivacioniKod());
+        try {
+            korisnik.setMesto(korisnikSession.vratiMesto(mestoId));
+            korisnik.setTipkorisnika(1); //1 - radnik 2 - menadzer
+            korisnik.setStatus(0); //0 - Neaktivan 1- OK 2-Obrisan
+            korisnik.setAktivacioniKod(vratiAktivacioniKod());
+            korisnik.setEmail(this.email);
+            korisnikSession.ubaci(korisnik);
+            posaljiAktivacioniMail(korisnik.getEmail(), korisnik.getAktivacioniKod());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Korisnik unet", "Molimo aktivirajte prvo svoj nalog!"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        korisnikSession.ubaci(korisnik);
-
-        posaljiAktivacioniMail(korisnik.getEmail(), korisnik.getAktivacioniKod());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Korisnik unet", "Molimo aktivirajte prvo svoj nalog!"));
     }
 
     public Korisnik prikaziUlogovanogRadnika() {
@@ -117,7 +124,7 @@ public class KorisnikBean implements Serializable {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(username.trim(), password.trim());
                     }
                 });
 
@@ -148,6 +155,22 @@ public class KorisnikBean implements Serializable {
             buffer.append(characters.charAt((int) index));
         }
         return buffer.toString();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

@@ -7,6 +7,7 @@ package managedbeans.obavljanje;
 
 import domen.Korisnik;
 import domen.Slika;
+import domen.SlikaPK;
 import domen.Zadatak;
 import imageprocessing.EdgeDetection;
 import imageprocessing.HistogramEqualizationFilter;
@@ -90,6 +91,7 @@ public class ObavljanjeBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        vratiZadatkeKorisnika();
         List<String> izvorniFilteri = new ArrayList<>();
         List<String> odabraniFilteri = new ArrayList<>();
 
@@ -101,7 +103,7 @@ public class ObavljanjeBean implements Serializable {
         filteri = new DualListModel<>(izvorniFilteri, odabraniFilteri);
     }
 
-    public List<Zadatak> vratiZadatkeKorisnika() {
+    public void vratiZadatkeKorisnika() {
         this.zadaci = new ArrayList<>();
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
@@ -111,10 +113,7 @@ public class ObavljanjeBean implements Serializable {
         } catch (Exception e) {
             throw new RuntimeException("Niste ulogovani!!");
         }
-
         this.zadaci = zadatakSession.vratiZadatkeKorisnika(k.getKorisnikid());
-        return zadaci;
-
     }
 
     public void primeniFiltere() {
@@ -127,13 +126,15 @@ public class ObavljanjeBean implements Serializable {
                 String naziv = slika + "_" + imageFilter;
                 File outputfile = new File("/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/resources/Images/" + naziv);
                 ImageIO.write(processedImage, "png", outputfile);
-                
-                //******Sredi ovo!!
+
+                SlikaPK pk = new SlikaPK(zadatak.getZadatakid(), zadatak.getSlikaList().size() + 1);
                 Slika sl = new Slika();
+                sl.setSlikaPK(pk);
                 sl.setNaziv(naziv);
                 zadatak.getSlikaList().add(sl);
-                slika = naziv;
-                slike.add(naziv);
+                postaviSlikeZadataka();
+                System.out.println("Gotovo");
+                this.progress = 101;
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -154,11 +155,21 @@ public class ObavljanjeBean implements Serializable {
             slike.add(s.getNaziv());
         }
         if (slike.isEmpty()) {
-            slike.add("Nema slika");
+            slike.add("noimage.jpg");
             slika = "noimage.jpg";
         } else {
             slika = slike.get(0);
         }
+    }
+
+    public void sacuvajZadatak() {
+        try {
+            zadatakSession.izmeniZadatak(this.zadatak);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "Zadatak uspesno sacuvan!"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "Greska " + e.getMessage()));
+        }
+
     }
 
     public List<Zadatak> getZadaci() {
@@ -208,5 +219,5 @@ public class ObavljanjeBean implements Serializable {
     public void setFilteri(DualListModel<String> filteri) {
         this.filteri = filteri;
     }
-    
+
 }

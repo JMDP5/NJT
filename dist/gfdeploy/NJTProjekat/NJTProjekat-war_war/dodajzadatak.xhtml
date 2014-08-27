@@ -23,17 +23,21 @@ and open the template in the editor.
                 <f:view>
                     <h:form id="form1">
                         <h1><h:outputText value="Dodaj novi zadatak: "/></h1>
-                        <p:panelGrid columns="2">
+                        <p:messages/>
+                        <p:panelGrid columns="3">
                             <p:outputLabel value="Nazivzadatka:" for="nazivzadatka" />
                             <p:inputText id="nazivzadatka" value="#{zadatak.zadatak.nazivzadatka}" title="Nazivzadatka" required="true" requiredMessage="The Nazivzadatka field is required."/>
+                            <p:message for="nazivzadatka"/>
                             <p:outputLabel value="Rokzaizvrsenje:" />
-                            <p:calendar value="#{zadatak.zadatak.rokzaizvrsenje}" mode="popup" pattern="yyyy-MM-dd"/>
+                            <p:calendar id="rok" value="#{zadatak.datum}" mode="popup" pattern="yyyy-MM-dd" validatorMessage="Datum mora biti u buducnosti!"/>
+                            <p:message for="rok"/>
 
                             <p:outputLabel value="Status:" for="status" />
                             <p:inputText id="status" value="#{zadatak.zadatak.status}" title="Status" />
+                            <br/>
                             <p:outputLabel value="Opis:" for="opis" />
                             <p:inputTextarea rows="4" cols="30" id="opis" value="#{zadatak.zadatak.opis}" title="Opis" required="true" requiredMessage="The Opis field is required."/>
-
+                            <p:message for="opis"/>
                             <!--Preview image before it's uploaded-->
                             <!--http://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded?lq=1-->
 
@@ -42,7 +46,7 @@ and open the template in the editor.
                         <br/>
                         <br/>
                         <br/>
-                        <p:commandButton value="Sacuvaj zadatak" id="submit" actionListener="#{zadatak.sacuvajZadatak()}" type="submit" />
+                        <p:commandButton value="Sacuvaj zadatak" id="submit" actionListener="#{zadatak.sacuvajZadatak()}" type="submit" update="form1"/>
                     </h:form >
                     <br/>
                     <h:form id="form2" enctype="multipart/form-data">
@@ -56,7 +60,6 @@ and open the template in the editor.
                                                 </h:commandButton>-->
                     </h:form>
                 </f:view>
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             </ui:define>
         </ui:composition>
     </h:body>

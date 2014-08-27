@@ -34,21 +34,10 @@ and open the template in the editor.
                             <h:outputText value="              "></h:outputText>
                             <h:commandLink action="registracija?faces-redirect=true" value="Registruj se!"></h:commandLink>
                         </h:panelGrid>
-
-                    </h:form>
-
-                    <!--Kako ide ovo sa ovim messages??-->
-                    <p:messages showDetail="true" />
-
-                    <h:form id="form2">
-                        <h:panelGrid id="userPanel2" columns="2" >
-
-                        </h:panelGrid>
-
+                        <p:messages showDetail="true" closable="true"/>
                     </h:form>
                 </f:view>
             </ui:define>
-            <p:messages showDetail="true" />
         </ui:composition>
     </h:body>
 </html>
