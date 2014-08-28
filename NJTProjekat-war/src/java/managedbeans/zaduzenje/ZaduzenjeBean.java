@@ -82,7 +82,12 @@ public class ZaduzenjeBean implements Serializable {
     public void sacuvajZaduzenje() {
         ZaduzenjePK zpk = new ZaduzenjePK(Integer.parseInt(korisnikId), Integer.parseInt(zadatakId));
         zaduzenje.setZaduzenjePK(zpk);
-        korisnikSession.zapamtiZaduzenje(zaduzenje);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "Zaduzenje uspesno dodato!"));
+        try {
+            korisnikSession.zapamtiZaduzenje(zaduzenje);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zaduzenje uspesno dodato!", ""));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaduzenje nije dodato!", e.getMessage()));
+        }
+
     }
 }

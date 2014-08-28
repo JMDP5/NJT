@@ -20,32 +20,36 @@ and open the template in the editor.
         <ui:composition template="template.xhtml">
             <ui:define name="content">
                 <f:view>
-                    <h:form>
+                    <h:form id="f1">
                         <h1><h:outputText value="Kreiraj novo zaduzenje:"/></h1>
-                        <h:panelGrid columns="2">
+                        <h:panelGrid columns="3">
                             <h:outputLabel  value="Datumdodele:  " for="datumdodele" />
                             <h:inputText id="datumdodele" value="#{zaduzenje.zaduzenje.datumdodele}" title="Datumdodele" readonly="true">
                                 <f:convertDateTime pattern="yyyy-MM-dd" />
                             </h:inputText>
+                            <br/>
                             <h:outputLabel value="Napomena:" for="napomena" />
                             <h:inputTextarea rows="4" cols="30" id="napomena" value="#{zaduzenje.zaduzenje.napomena}" title="Napomena" />
+                            <br/>
                             <h:outputLabel value="Zadatak:" for="zadatak" />
-                            <p:selectOneMenu id="zadatak" value="#{zaduzenje.zadatakId}" required="true" requiredMessage="The Zadatak field is required.">
+                            <p:selectOneMenu id="zadatak" value="#{zaduzenje.zadatakId}" required="true" requiredMessage="Prvo odaberite zadatak.">
                                 <f:selectItem itemLabel="Odaberite zadatak: " itemValue="" />
                                 <f:selectItems value="#{zaduzenje.vratiSveZadatke()}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
 
                             </p:selectOneMenu>
+                            <p:message id="m1" showDetail="true" for="zadatak" />
                             <h:outputLabel value="Korisnik:" for="korisnik" />
-                            <p:selectOneMenu id="korisnik" value="#{zaduzenje.korisnikId}" required="true" requiredMessage="The Korisnik field is required.">
+                            <p:selectOneMenu id="korisnik" value="#{zaduzenje.korisnikId}" required="true" requiredMessage="Odaberite korisnika.">
 
                                 <f:selectItem itemLabel="Odaberi korisnika" itemValue="" />
                                 <f:selectItems value="#{zaduzenje.vratiSveKorisnike()}" var="k"
                                                itemLabel="#{k.ime}" itemValue="#{k.korisnikid}"/>
                             </p:selectOneMenu>
-                            <p:commandButton value="Dodaj zaduzenje" id="submit" actionListener="#{zaduzenje.sacuvajZaduzenje()}" type="submit"/>
+                            <p:message id="m2" showDetail="true" for="korisnik" />
+                            <p:commandButton value="Dodaj zaduzenje" id="submit" actionListener="#{zaduzenje.sacuvajZaduzenje()}" type="submit" update="f1"/>
                         </h:panelGrid>
-                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:messages globalOnly="true" showDetail="true" closable="true"/>
                     </h:form>
                 </f:view>
             </ui:define>

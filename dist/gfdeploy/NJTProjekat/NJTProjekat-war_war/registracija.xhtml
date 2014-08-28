@@ -19,45 +19,43 @@ and open the template in the editor.
             <h:form id="f1">
                 <!--http://stackoverflow.com/questions/315804/how-to-display-my-applications-errors-in-jsf-->
                 <!--http://stackoverflow.com/questions/8633585/pgrowl-and-pmessages-in-a-same-page-->
-                
+
                 <!--Custom validation via @FacesValidator annotation.-->
                 <!--http://www.mkyong.com/jsf2/custom-validator-in-jsf-2-0/-->
 
 
-                <p:panel>
-                    <h2><h:outputText value="Popunite neophodne podatke za registraciju"/></h2>
-                    <h:panelGrid columns="3">
-                        <p:outputLabel value="Ime:" for="ime" />
-                        <p:inputText id="ime" value="#{korisnik.korisnik.ime}" title="Ime" />
-                        <h:message id="m1" showDetail="true" for="ime"/>
+                <h2><h:outputText value="Popunite neophodne podatke za registraciju"/></h2>
+                <h:panelGrid columns="3">
+                    <p:outputLabel value="Ime:" for="ime" />
+                    <p:inputText id="ime" value="#{korisnik.korisnik.ime}" title="Ime" />
+                    <h:message id="m1" showDetail="true" for="ime"/>
 
-                        <p:outputLabel value="Korisnicko ime:" for="korisnickoime" />
-                        <p:inputText id="korisnickoime" value="#{korisnik.korisnik.korisnickoime}" title="Korisnickoime" required="true" requiredMessage="Unesite korisnicko ime!"/>
-                        <p:message id="m2" showDetail="true" for="korisnickoime" />
+                    <p:outputLabel value="Korisnicko ime:" for="korisnickoime" />
+                    <p:inputText id="korisnickoime" value="#{korisnik.korisnik.korisnickoime}" title="Korisnickoime" required="true" requiredMessage="Unesite korisnicko ime!"/>
+                    <p:message id="m2" showDetail="true" for="korisnickoime" />
 
-                        <p:outputLabel value="Lozinka:" for="lozinka" />
-                        <p:inputText id="lozinka" value="#{korisnik.korisnik.lozinka}" title="Lozinka" required="true" requiredMessage="Unesite lozinku!"/>
-                        <p:message id="m3" showDetail="true" for="lozinka" />
+                    <p:outputLabel value="Lozinka:" for="lozinka" />
+                    <p:inputText id="lozinka" value="#{korisnik.korisnik.lozinka}" title="Lozinka" required="true" requiredMessage="Unesite lozinku!"/>
+                    <p:message id="m3" showDetail="true" for="lozinka" />
 
-                        <p:outputLabel value="Email:" for="email" />
-                        <p:inputText id="email" value="#{korisnik.email}" required="true" requiredMessage="Molimo unesite email!"
-                                     validatorMessage="Los format email-a!">
-                            <f:validateRegex
-                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" for="email"/>
-                        </p:inputText> 
-                        <p:message id="m4" for="email" severity="error"/>
+                    <p:outputLabel value="Email:" for="email" />
+                    <p:inputText id="email" value="#{korisnik.email}" required="true" requiredMessage="Molimo unesite email!"
+                                 validatorMessage="Los format email-a!">
+                        <f:validateRegex
+                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" for="email"/>
+                    </p:inputText> 
+                    <p:message id="m4" for="email" severity="error"/>
 
-                        <p:outputLabel value="Mesto:" for="mesto" />
-                        <p:selectOneMenu id="mesto" value="#{korisnik.mestoId}" >
-                            <f:selectItems value="#{korisnik.vratiMesta()}" var="m"
-                                           itemLabel="#{m.nazivmesta}" itemValue="#{m.pttbroj}"/>
-                        </p:selectOneMenu>
-                        <br/>
-                        <br/>
-                    </h:panelGrid>
-                    <p:commandButton value="Registruj se" icon="ui-icon-check" id="submit" actionListener="#{korisnik.registrujKorisnika()}" type="submit" update="f1"/>
-                </p:panel>
-                <!--<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />-->
+                    <p:outputLabel value="Mesto:" for="mesto" />
+                    <p:selectOneMenu id="mesto" value="#{korisnik.mestoId}" >
+                        <f:selectItems value="#{korisnik.vratiMesta()}" var="m"
+                                       itemLabel="#{m.nazivmesta}" itemValue="#{m.pttbroj}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <p:commandButton value="Registruj se" icon="ui-icon-check" id="registruj" actionListener="#{korisnik.registrujKorisnika()}" type="submit" ajax="false" update="f1"/>
+                <br/>
+                <p:message id="greska" for="registruj" showDetail="true"/>
+                <p:growl globalOnly="true" id="reg" showDetail="true"/>
             </h:form>
         </f:view>
 

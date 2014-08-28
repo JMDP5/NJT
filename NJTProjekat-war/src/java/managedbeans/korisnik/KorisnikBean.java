@@ -81,9 +81,9 @@ public class KorisnikBean implements Serializable {
             korisnik.setEmail(this.email);
             korisnikSession.ubaci(korisnik);
             posaljiAktivacioniMail(korisnik.getEmail(), korisnik.getAktivacioniKod());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Korisnik unet", "Molimo aktivirajte prvo svoj nalog!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Korisnik unet!", "Molimo aktivirajte prvo svoj nalog!"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("f1:registruj", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska", "Greksa"));
         }
 
     }

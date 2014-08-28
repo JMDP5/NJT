@@ -57,7 +57,7 @@ public class KorisnikSession {
     }
 
     public Korisnik ubaci(Korisnik k) {
-        System.out.println(k.getKorisnikid() + " " + k.getIme());
+        System.out.println("ID:" + k.getKorisnikid() + " ime: " + k.getIme());
         try {
             em.persist(k);
             em.flush();

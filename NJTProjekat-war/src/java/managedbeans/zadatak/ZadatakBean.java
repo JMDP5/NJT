@@ -90,7 +90,7 @@ public class ZadatakBean implements Serializable {
             //http://stackoverflow.com/questions/17922620/jpa-persist-foreign-key-restriction-violation
             http://stackoverflow.com/questions/12368127/why-am-i-getting-foreign-key-constraint-fails-exception-on-persist
             zadatakSession.sacuvajZadatak(zadatak);
-            FacesContext.getCurrentInstance().addMessage("form1:rok", new FacesMessage("Zadatak sacuvan!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zadatak sacuvan!", ""));
             slike = new ArrayList<>();
             numImages = 0;
             postaviZadatakID();
