@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -33,7 +34,6 @@ public class RezultatPretrage implements Serializable {
 
     @EJB
     private ZadatakSession zadatakSession;
-
     private List<Zadatak> zadaci;
     private Zadatak zadatak;
     private String zadatakID;
@@ -64,8 +64,9 @@ public class RezultatPretrage implements Serializable {
         return zadaci;
     }
 
-    public String izmeni() {
-        return "izmenabrisanje?faces-redirect=true";
+    public void izmeni() {
+        System.out.println(zadatak.getStatus());
+        zadatakSession.izmeniZadatak(zadatak);
     }
 
     public void obrisi() {

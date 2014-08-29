@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Pregled zadataka</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="form1">
+                        <h:panelGrid id="userPanel1" columns="2" style="margin: 0 auto;">
+                            <h:outputLabel value="Naziv zadatka: " for="naziv" />
+                            <h:inputText value="#{pretraga.nazivzadatka}" id="naziv"/>
+                            <h:outputLabel value="Status: " for="status" />
+                            <h:inputText value="#{pretraga.status}" id="staus"/>
+                            <h:outputLabel value="Rok " />
+                            <p:calendar value="#{pretraga.rok}" mode="popup" pattern="yyyy-MM-dd"/>
+                            <h:outputLabel value="Slike: " />
+                            <h:commandButton value="Pretrazi" action="#{pretraga.pretrazi()}"></h:commandButton>
+                            <!--Ovo dole treba da se pojavi kada se klikne pretrazi-->
+                        </h:panelGrid>
+                        <p:messages showDetail="true" />
+                    </h:form>
+                </f:view>
+            </ui:define>
+            <p:messages showDetail="true" />
+        </ui:composition>
+
+    </h:body>
+</html>

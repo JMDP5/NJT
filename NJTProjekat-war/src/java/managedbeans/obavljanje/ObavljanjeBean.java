@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -73,7 +71,7 @@ public class ObavljanjeBean implements Serializable {
 
     public void onComplete() {
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("filterDialog.hide();");
+            context.execute("filterDialog.close();");
         cancel();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Progress Completed"));
 

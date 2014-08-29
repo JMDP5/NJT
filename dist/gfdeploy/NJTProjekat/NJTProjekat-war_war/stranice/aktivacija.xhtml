@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </h:head>
+    <h:body>
+        Dobro dosli,  <p:outputLabel value="#{aktivacija.key}"/>  
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="false" />
+                <p:outputPanel id="emailForm">
+            <f:view>
+                <h:form  rendered="#{aktivacija.prikazi}">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="email" for="emailInput" rendered="true" />
+                        <p:inputText id="emailInput" value="#{aktivacija.email}" title="email" 
+                                     required="true" requiredMessage="The username field is required."
+                                     rendered="true"/>
+                      
+                        <!--<p:commandButton value="Log In" id="submit" actionListener="{aktivacijaManagedBean.posaljiMejl()}" type="submit"/>-->
+                    </p:panelGrid>
+                </h:form>
+            </f:view>
+
+        </p:outputPanel>
+        
+        <p:link outcome="logovanje" value="Uloguj se"></p:link>
+    </h:body>
+</html>

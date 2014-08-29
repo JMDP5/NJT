@@ -67,9 +67,9 @@ public class LogovanjeBean implements Serializable {
                 HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
                 session.setAttribute("korisnik", k);
                 if (k.getTipkorisnika() == 1) { // Radnik -- tipKorisnika = 1
-                    return "obradazadataka?faces-redirect=true";
+                    return "obradazadataka.xhtml";
                 } else {
-                    return "dodajzadatak?faces-redirect=true";
+                    return "dodajzadatak.xhtml";
 
                 }
             }

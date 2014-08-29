@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>TODO supply a title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml"> 
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="form1">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nazivzadatka:" for="nazivzadatka" />
+                            <p:inputText id="nazivzadatka" value="#{izmena.z.nazivzadatka}" title="Nazivzadatka" required="true" requiredMessage="The Nazivzadatka field is required."/>
+                            <p:outputLabel value="Rokzaizvrsenje:" />
+                            <p:calendar value="#{izmena.z.rokzaizvrsenje}" mode="popup" pattern="yyyy-MM-dd"/>
+
+                            <p:outputLabel value="Status:" for="status" />
+                            <p:inputText id="status" value="#{izmena.z.status}" title="Status" />
+                            <p:outputLabel value="Opis:" for="opis" />
+                            <p:inputTextarea rows="4" cols="30" id="opis" value="#{izmena.z.opis}" title="Opis" required="true" requiredMessage="The Opis field is required."/>
+
+                            <!--Preview image before it's uploaded-->
+                            <!--http://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded?lq=1-->
+
+                            <p:commandButton value="Sacuvaj zadatak" id="submit" actionListener="#{zadatak.sacuvajZadatak()}" type="submit" />
+                        </p:panelGrid>
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

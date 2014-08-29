@@ -11,14 +11,27 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>excite-bike</param-value>
+    </context-param>
     <welcome-file-list>
-        <welcome-file>faces/logovanje.xhtml</welcome-file>
+        <welcome-file>stranice/logovanje.xhtml</welcome-file>
     </welcome-file-list>
+    <filter>
+        <filter-name>MyFilter</filter-name>
+        <filter-class>pagefilters.MyFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MyFilter</filter-name>
+        <url-pattern>/faces/*</url-pattern>
+    </filter-mapping>
 </web-app>

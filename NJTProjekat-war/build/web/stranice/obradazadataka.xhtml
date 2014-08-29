@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>                           
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Obavljanje zadataka</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="form1">
+
+                        <h1><h:outputText value="Obradi slike: "/></h1>
+                        <p:panelGrid columns="2">
+                            <h:outputLabel value="Pronajdeni zadaci: " />
+
+                            <p:selectOneMenu id="zadatak" value="#{obavljanjezadatka.zadatakID}" >
+                                <f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />
+                                <f:selectItems value="#{obavljanjezadatka.zadaci}" var="z"
+                                               itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
+                                <f:ajax listener="#{obavljanjezadatka.postaviSlikeZadataka()}" render="slike gslika"/>
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Slike: " />
+                            <p:selectOneMenu id="slike" value="#{obavljanjezadatka.slika}" >
+                                <!--<f:selectItem itemLabel="Odaberite sliku " itemValue="-1" />-->
+                                <f:selectItems value="#{obavljanjezadatka.slike}" var="s"
+                                               itemLabel="#{s}" itemValue="#{s}"/>
+                                <p:ajax update="gslika"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+                        <br/>
+                        <p:graphicImage id="gslika" value="resources/Images/#{obavljanjezadatka.slika}" width="200" height="200"/>  
+                        <br/>
+                        <br/>
+                        <h3 style="margin-top: 0">Filteri za preprocesiranje</h3>
+                        <p:pickList id="pickList" value="#{obavljanjezadatka.filteri}" var="f" itemLabel="#{f}" itemValue="#{f}" />
+                        <p:commandButton id="filterSubmit" value="Primeni filtere" update="progress,slike" action="#{obavljanjezadatka.primeniFiltere()}" onclick="PF('filterDialog').show();
+                                PF('pbAjax').start()" style="margin-top:5px"/>
+                        <!--Ovde gore mozda da dodam ajax="false"-->
+
+                        <p:dialog id="dialog" modal="true" showEffect="fade" hideEffect="fade" header="Obrada u toku..." widgetVar="filterDialog" width="200">
+                            <p:growl id="progressMessage"/>
+                            <p:progressBar id="progress" widgetVar="pbAjax" ajax="true" value="#{obavljanjezadatka.progress}" labelTemplate="{value}%" styleClass="animated" global="false">
+                                <p:ajax event="complete" listener="#{obavljanjezadatka.onComplete()}" update="dialog" />
+                                <!--Ovde u ajax mozda update="form1"-->
+                            </p:progressBar>
+                        </p:dialog>
+
+                        <p:commandButton id="sacuvajZadatak" value="Sacuvaj zadatak" actionListener="#{obavljanjezadatka.sacuvajZadatak()}" />
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    </h:form >
+                </f:view>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

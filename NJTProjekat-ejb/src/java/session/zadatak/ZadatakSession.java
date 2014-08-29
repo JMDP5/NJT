@@ -90,10 +90,21 @@ public class ZadatakSession {
         return res > 0;
 
     }
-    
+
     public void izmeniZadatak(Zadatak z) {
         em.merge(z);
-        
+
+    }
+
+    public Zadatak vratiZadatak(Integer zadatakID) {
+        Query q = em.createNamedQuery("Zadatak.findByZadatakid");
+        q.setParameter("zadatakid", zadatakID);
+        List result = q.getResultList();
+        if (result.size() > 0) {
+            return (Zadatak) result.get(0);
+        }
+        return null;
+
     }
 
 }
