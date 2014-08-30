@@ -67,9 +67,9 @@ public class LogovanjeBean implements Serializable {
                 HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
                 session.setAttribute("korisnik", k);
                 if (k.getTipkorisnika() == 1) { // Radnik -- tipKorisnika = 1
-                    return "obradazadataka.xhtml";
+                    return "obradazadataka.xhtml?faces-redirect=true";
                 } else {
-                    return "dodajzadatak.xhtml";
+                    return "dodajzadatak.xhtml?faces-redirect=true";
 
                 }
             }
@@ -81,7 +81,7 @@ public class LogovanjeBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
         session.invalidate();
-        return "logovanje";
+        return "logovanje.xhtml?faces-redirect=true";
     }
 
 }

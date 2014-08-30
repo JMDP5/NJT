@@ -25,7 +25,7 @@ and open the template in the editor.
                         <p:panelGrid columns="2">
                             <h:outputLabel value="Pronajdeni zadaci: " />
 
-                            <p:selectOneMenu id="zadatak" value="#{obavljanjezadatka.zadatakID}" >
+                            <p:selectOneMenu id="zadatak" value="#{obavljanjezadatka.zadatakID}" rendered="true">
                                 <f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />
                                 <f:selectItems value="#{obavljanjezadatka.zadaci}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
@@ -33,7 +33,7 @@ and open the template in the editor.
                             </p:selectOneMenu>
 
                             <h:outputLabel value="Slike: " />
-                            <p:selectOneMenu id="slike" value="#{obavljanjezadatka.slika}" >
+                            <p:selectOneMenu id="slike" value="#{obavljanjezadatka.slika}" rendered="true">
                                 <!--<f:selectItem itemLabel="Odaberite sliku " itemValue="-1" />-->
                                 <f:selectItems value="#{obavljanjezadatka.slike}" var="s"
                                                itemLabel="#{s}" itemValue="#{s}"/>
@@ -42,12 +42,12 @@ and open the template in the editor.
 
                         </p:panelGrid>
                         <br/>
-                        <p:graphicImage id="gslika" value="resources/Images/#{obavljanjezadatka.slika}" width="200" height="200"/>  
+                        <p:graphicImage id="gslika" url= "../resources/Images/#{obavljanjezadatka.slika}" width="200" height="200"/>  
                         <br/>
                         <br/>
                         <h3 style="margin-top: 0">Filteri za preprocesiranje</h3>
                         <p:pickList id="pickList" value="#{obavljanjezadatka.filteri}" var="f" itemLabel="#{f}" itemValue="#{f}" />
-                        <p:commandButton id="filterSubmit" value="Primeni filtere" update="progress,slike" action="#{obavljanjezadatka.primeniFiltere()}" onclick="PF('filterDialog').show();
+                        <p:commandButton id="filterSubmit" value="Primeni fialtere" update="progress,slike" action="#{obavljanjezadatka.primeniFiltere()}" onclick="PF('filterDialog').show();
                                 PF('pbAjax').start()" style="margin-top:5px"/>
                         <!--Ovde gore mozda da dodam ajax="false"-->
 

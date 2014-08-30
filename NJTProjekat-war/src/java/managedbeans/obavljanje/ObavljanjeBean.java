@@ -73,7 +73,7 @@ public class ObavljanjeBean implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
             context.execute("filterDialog.close();");
         cancel();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Progress Completed"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zavrsena obrada!"));
 
     }
 
@@ -195,6 +195,9 @@ public class ObavljanjeBean implements Serializable {
     }
 
     public String getSlika() {
+        if (slika == null) {
+            slika = "border.jpg";
+        }
         return slika;
     }
 

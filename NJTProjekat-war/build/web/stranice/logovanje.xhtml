@@ -21,17 +21,17 @@ and open the template in the editor.
                 <f:view>
                     <h:form id="form1">
                         <h:panelGrid id="userPanel1" columns="2" style="margin: 0 auto;">
-                            <h:outputLabel value="Korisnicko ime:" for="korisnickoime" />
-                            <h:inputText value="#{logovanje.korisnickoime}" id="korisnickoime"/>
-                            <h:outputLabel value="Lozinka:" />
-                            <h:inputSecret value="#{logovanje.loznika}" id="loznika">
+                            <p:outputLabel value="Korisnicko ime:" for="korisnickoime" />
+                            <p:inputText value="#{logovanje.korisnickoime}" id="korisnickoime"/>
+                            <p:outputLabel value="Lozinka:" />
+                            <p:password value="#{logovanje.loznika}" id="loznika">
                                 <!--<f:validateLength minimum="5"/>-->
-                            </h:inputSecret>
+                            </p:password>
 
                             <h:outputText value="      "></h:outputText>
-                            <h:commandButton value="Uloguj se" action="#{logovanje.ulogujKorisnika()}"></h:commandButton>
+                            <p:commandButton value="Uloguj se" action="#{logovanje.ulogujKorisnika()}"></p:commandButton>
                             <h:outputText value="              "></h:outputText>
-                            <h:commandLink action="registracija?faces-redirect=true" value="Registruj se!"></h:commandLink>
+                            <p:commandLink action="registracija.xhtml?faces-redirect=true" value="Registruj se!"></p:commandLink>
                         </h:panelGrid>
                         <p:messages showDetail="true" closable="true"/>
                     </h:form>

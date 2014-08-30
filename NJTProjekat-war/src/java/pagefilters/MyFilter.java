@@ -41,17 +41,20 @@ public class MyFilter implements Filter {
         boolean isLoggedIn = (k != null);
         // Check if the user is accessing "login.xhtml"
         System.out.println("RequestURI" + req.getRequestURI());
-        if (req.getRequestURI().equals("/NJTProjekat-war/stranice/logovanje.xhtml")) {
-
+        if (req.getRequestURI().equals("/NJTProjekat-war/stranice/registracija.xhtml")) {
+            chain.doFilter(request, response);
+        } else if (req.getRequestURI().equals("/NJTProjekat-war/stranice/logovanje.xhtml")) {
             if (isLoggedIn) {
                 // Redirect to "home.xhtml"
                 HttpServletResponse res = (HttpServletResponse) response;
+                res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                res.setDateHeader("Expires", 0); // Proxies.
                 res.sendRedirect(req.getContextPath() + "/stranice/obradazadataka.xhtml");
             } else {
                 // Otherwise, nothing to do if he has not logged in
                 chain.doFilter(request, response);
             }
-
         } else {
             // For all other pages,
             if (isLoggedIn) {
@@ -60,9 +63,9 @@ public class MyFilter implements Filter {
             } else {
                 // Redirect to "login.xhtml" if he has not logged in
                 HttpServletResponse res = (HttpServletResponse) response;
-                res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-                res.setDateHeader("Expires", 0); // Proxies.
+//                res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//                res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//                res.setDateHeader("Expires", 0); // Proxies.
                 res.sendRedirect(req.getContextPath() + "/stranice/logovanje.xhtml");
             }
         }
@@ -71,6 +74,6 @@ public class MyFilter implements Filter {
 
     @Override
     public void destroy() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
