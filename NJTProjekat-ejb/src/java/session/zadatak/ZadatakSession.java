@@ -95,6 +95,10 @@ public class ZadatakSession {
         em.merge(z);
 
     }
+    
+    public List<Zadatak> vratiSveZadatke() {
+        return em.createNamedQuery("Zadatak.findAll").getResultList();
+    }
 
     public Zadatak vratiZadatak(Integer zadatakID) {
         Query q = em.createNamedQuery("Zadatak.findByZadatakid");

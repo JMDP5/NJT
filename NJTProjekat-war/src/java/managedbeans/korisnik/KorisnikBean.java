@@ -8,8 +8,10 @@ package managedbeans.korisnik;
 import domen.Korisnik;
 import domen.Mesto;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -42,6 +44,7 @@ public class KorisnikBean implements Serializable {
     private String mestoId;
     private String email;
     private String username;
+    Set<String> korisnickaImena;
 
     /**
      * Creates a new instance of KorisnikBean
@@ -52,6 +55,11 @@ public class KorisnikBean implements Serializable {
     @PostConstruct
     public void init() {
         korisnik = new Korisnik();
+        List<Korisnik> svi = korisnikSession.vratiSveKorisnike();
+        korisnickaImena = new HashSet();
+        for (Korisnik k : svi) {
+            korisnickaImena.add(k.getKorisnickoime());
+        }
 
     }
 
@@ -75,6 +83,7 @@ public class KorisnikBean implements Serializable {
     public void registrujKorisnika() {
         try {
             korisnik.setMesto(korisnikSession.vratiMesto(mestoId));
+            korisnik.setKorisnickoime(username);
             korisnik.setTipkorisnika(1); //1 - radnik 2 - menadzer
             korisnik.setStatus(0); //0 - Neaktivan 1- OK 2-Obrisan
             korisnik.setAktivacioniKod(vratiAktivacioniKod());
@@ -170,7 +179,11 @@ public class KorisnikBean implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        if (this.korisnickaImena.contains(username)) {
+            throw new RuntimeException("Korisnicko ime zauzeto");
+        } else {
+            this.username = username;
+        }
     }
 
 }

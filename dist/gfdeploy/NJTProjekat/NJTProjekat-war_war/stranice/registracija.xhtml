@@ -19,7 +19,6 @@ and open the template in the editor.
             <h:form id="f1">
                 <!--http://stackoverflow.com/questions/315804/how-to-display-my-applications-errors-in-jsf-->
                 <!--http://stackoverflow.com/questions/8633585/pgrowl-and-pmessages-in-a-same-page-->
-
                 <!--Custom validation via @FacesValidator annotation.-->
                 <!--http://www.mkyong.com/jsf2/custom-validator-in-jsf-2-0/-->
 
@@ -31,7 +30,10 @@ and open the template in the editor.
                     <h:message id="m1" showDetail="true" for="ime"/>
 
                     <p:outputLabel value="Korisnicko ime:" for="korisnickoime" />
-                    <p:inputText id="korisnickoime" value="#{korisnik.korisnik.korisnickoime}" title="Korisnickoime" required="true" requiredMessage="Unesite korisnicko ime!"/>
+                    <p:inputText id="korisnickoime" value="#{korisnik.username}" required="true" requiredMessage="Unesite korisnicko ime!">
+                        <f:validator binding="#{usernamevalidation}" />
+                        <p:ajax event="keyup" update="m2" />
+                    </p:inputText>
                     <p:message id="m2" showDetail="true" for="korisnickoime" />
 
                     <p:outputLabel value="Lozinka:" for="lozinka" />

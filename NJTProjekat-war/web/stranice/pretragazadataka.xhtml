@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Pregled zadataka</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="f1">
+                        <p:growl id="msgs" showDetail="true"/>
+                        <p:dataTable id="table" value="#{pretragazadataka.sviZadaci}" var="item" widgetVar="zadaciTable" editable="true"
+                                     emptyMessage="Nema nadjenih zadataka!!!" filteredValue="#{pretragazadataka.filtriraniZadaci}">
+
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Pretrazite naziv i status:" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('zadaciTable').filter()" style="width:200px" placeholder="Unesite kljucnu rec"/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:ajax event="rowEdit" listener="#{pretragazadataka.onRowEdit}" update=":f1:msgs" />
+                            <p:ajax event="rowEditCancel" listener="#{pretragazadataka.onRowCancel}" update=":f1:msgs" />
+
+                            <p:column headerText="Id" style="width:60px">
+                                <h:outputText value="#{item.zadatakid}" />
+                            </p:column>
+
+                            <p:column filterBy="#{item.nazivzadatka}" headerText="Naziv zadatka" footerText="filter" filterMatchMode="startsWith">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{item.nazivzadatka}"/></f:facet>
+                                    <f:facet name="input"><h:inputText value="#{item.nazivzadatka}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{item.status}" headerText="Status" footerText="filter" filterMatchMode="startsWith">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{item.status}"/></f:facet> 
+                                    <f:facet name="input"><h:inputText value="#{item.status}" style="width:100%" label="Id"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Rok za izvrsenje" style="width:230px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText id="datumdodele" value="#{item.rokzaizvrsenje}">
+                                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar id="rok" value="#{pretragazadataka.rok}" placeholder="Izaberite datum za izmenu" mode="popup" pattern="yyyy-MM-dd" validatorMessage="Datum mora biti u buducnosti!"/>
+                                        <p:message for="rok" severity="warn"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column style="width:60px" headerText="Slike">
+                                <p:commandButton update=":f1:zadatakDetail" oncomplete="PF('zadatakDialog').show()" icon="ui-icon-search">
+                                    <f:setPropertyActionListener value="#{item}" 
+                                                                 target="#{pretragazadataka.selektovanZadatak}"/>
+                                </p:commandButton>
+                            </p:column>
+
+                            <p:column style="width:60px" headerText="Izmeni">
+                                <p:rowEditor />
+                            </p:column>
+
+                            <p:column style="width:60px" headerText="Obrisi">
+                                <p:commandButton icon="ui-icon-trash" actionListener="#{pretragazadataka.obrisiZadatak(item)}" update=":f1:msgs,:f1:table"/>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:dialog header="Slike" widgetVar="zadatakDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="zadatakDetail" style="text-align:center;">
+                                <p:galleria id="galleria" value="#{pretragazadataka.selektovanZadatak.slikaList}" var="slika" panelWidth="250" panelHeight="200" showCaption="false" effectSpeed="3000" >
+                                    <p:graphicImage url="../resources/Images/#{slika.naziv}" width="250" height="200" title="{slika}"/>
+                                </p:galleria>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+            <p:messages showDetail="true" />
+        </ui:composition>
+
+
+    </h:body>
+</html>
