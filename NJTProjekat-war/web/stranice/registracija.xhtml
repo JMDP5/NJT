@@ -29,6 +29,7 @@ and open the template in the editor.
                         <!--http://www.mkyong.com/jsf2/custom-validator-in-jsf-2-0/-->
 
                         <h2><h:outputText value="Popunite neophodne podatke za registraciju"/></h2>
+                        <br/>
                         <h:panelGrid columns="3">
                             <p:outputLabel value="Ime:" for="ime" />
                             <p:inputText id="ime" value="#{korisnik.korisnik.ime}" title="Ime" />
@@ -59,6 +60,10 @@ and open the template in the editor.
                                                itemLabel="#{m.nazivmesta}" itemValue="#{m.pttbroj}"/>
                             </p:selectOneMenu>
                         </h:panelGrid>
+                        <br/>
+                         <p:link outcome="logovanje" value="Nazad na logovanje"></p:link>
+                        <br/>
+                        <br/>
                         <p:commandButton value="Registruj se" icon="ui-icon-check" id="registruj" actionListener="#{korisnik.registrujKorisnika()}" type="submit" ajax="false" update="f1"/>
                         <br/>
                         <p:message id="greska" for="registruj" showDetail="true"/>

@@ -39,9 +39,12 @@ public class MyFilter implements Filter {
         Korisnik k = (Korisnik) req.getSession().getAttribute("korisnik");
         System.out.println("Usao u filter - korisnik " + k);
         boolean isLoggedIn = (k != null);
-        // Check if the user is accessing "login.xhtml"
+
         System.out.println("RequestURI" + req.getRequestURI());
-        if (req.getRequestURI().equals("/NJTProjekat-war/stranice/registracija.xhtml")) {
+
+        //Dopusi svima pristup registraciji i aktvaciji
+        if (req.getRequestURI().equals("/NJTProjekat-war/stranice/registracija.xhtml")
+                || req.getRequestURI().contains("/NJTProjekat-war/stranice/aktivacija.xhtml")) {
             chain.doFilter(request, response);
         } else if (req.getRequestURI().equals("/NJTProjekat-war/stranice/logovanje.xhtml")) {
             if (isLoggedIn) {

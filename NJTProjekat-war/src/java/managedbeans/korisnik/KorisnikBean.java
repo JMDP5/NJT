@@ -92,7 +92,7 @@ public class KorisnikBean implements Serializable {
             posaljiAktivacioniMail(korisnik.getEmail(), korisnik.getAktivacioniKod());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Korisnik unet!", "Molimo aktivirajte prvo svoj nalog!"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage("f1:registruj", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska", "Greksa"));
+            FacesContext.getCurrentInstance().addMessage("f1:registruj", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Greska! " + e.getMessage()));
         }
 
     }
@@ -146,11 +146,11 @@ public class KorisnikBean implements Serializable {
             message.setSubject("Registracioni mejl");
             message.setText("Postovani/a " + korisnik.getIme() + ", \n"
                     + "Molimo Vas prvo aktivirajte svoj nalog klikom na link: "
-                    + "\n\n http://localhost:8080/NJTProjekat-war/faces/aktivacija.xhtml?key=" + kod);
+                    + "\n\n http://localhost:8080/NJTProjekat-war/stranice/aktivacija.xhtml?key=" + kod);
 
             Transport.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Mail nije poslat!");
         }
     }
 

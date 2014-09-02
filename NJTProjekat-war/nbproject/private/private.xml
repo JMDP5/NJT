@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/src/java/managedbeans/logovanje/LogovanjeBean.java</file>
-            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/stranice/footer.xhtml</file>
-            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/src/java/pagefilters/MyFilter.java</file>
-            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/src/java/managedbeans/obavljanje/ObavljanjeBean.java</file>
+            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/stranice/template.xhtml</file>
+            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/stranice/registracija.xhtml</file>
             <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/stranice/logovanje.xhtml</file>
-            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/stranice/header.xhtml</file>
-            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/stranice/obradazadataka.xhtml</file>
+            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/src/java/managedbeans/zadatak/ZadatakBean.java</file>
+            <file>file:/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/stranice/dodajzadatak.xhtml</file>
         </group>
     </open-files>
 </project-private>
