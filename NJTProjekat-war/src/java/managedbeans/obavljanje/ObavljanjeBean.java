@@ -10,6 +10,8 @@ import domen.Slika;
 import domen.SlikaPK;
 import domen.Zadatak;
 import imageprocessing.EdgeDetection;
+import imageprocessing.FilterPickList;
+import imageprocessing.GrayscaleFilter;
 import imageprocessing.HistogramEqualizationFilter;
 import imageprocessing.ImageFilter;
 import imageprocessing.MedianFilter;
@@ -48,7 +50,7 @@ public class ObavljanjeBean implements Serializable {
     private String zadatakID;
     private List<String> slike;
     private String slika;
-    private DualListModel<String> filteri;
+    private DualListModel<FilterPickList> filteri;
     private Integer progress;
 
     public Integer getProgress() {
@@ -71,10 +73,10 @@ public class ObavljanjeBean implements Serializable {
 
     public void onComplete() {
         RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("filterDialog.close();");
+//        context.execute("filterDialog.hide();");
+//        context.execute("pbAjax.hide();");
         cancel();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zavrsena obrada!"));
-
+        FacesContext.getCurrentInstance().addMessage("form1:progressMessage", new FacesMessage("Zavrsena obrada!"));
     }
 
     public void cancel() {
@@ -90,13 +92,13 @@ public class ObavljanjeBean implements Serializable {
     @PostConstruct
     public void init() {
         vratiZadatkeKorisnika();
-        List<String> izvorniFilteri = new ArrayList<>();
-        List<String> odabraniFilteri = new ArrayList<>();
+        List<FilterPickList> izvorniFilteri = new ArrayList<>();
+        List<FilterPickList> odabraniFilteri = new ArrayList<>();
 
-        izvorniFilteri.add("Otsu Binarizacija");
-        izvorniFilteri.add("Median filter");
-        izvorniFilteri.add("Grayscale");
-        izvorniFilteri.add("Edge Detection");
+        izvorniFilteri.add(new FilterPickList(new OtsuBinarizeFilter(), "Otsu Binarizacija"));
+        izvorniFilteri.add(new FilterPickList(new MedianFilter(), "Median Filter"));
+        izvorniFilteri.add(new FilterPickList(new GrayscaleFilter(), "Grayscale"));
+        izvorniFilteri.add(new FilterPickList(new EdgeDetection(), "Edge Detection"));
 
         filteri = new DualListModel<>(izvorniFilteri, odabraniFilteri);
     }
@@ -115,13 +117,13 @@ public class ObavljanjeBean implements Serializable {
     }
 
     public void primeniFiltere() {
-        List<String> odabraniFilteri = filteri.getTarget();
-        for (String imageFilter : odabraniFilteri) {
+        List<FilterPickList> odabraniFilteri = filteri.getTarget();
+        for (FilterPickList imageFilter : odabraniFilteri) {
             try {
                 //***** Promeni ovu putanju!!!
                 BufferedImage s = ImageIO.read(new File("/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/resources/Images/" + slika));
-                BufferedImage processedImage = new EdgeDetection().processImage(s);
-                String naziv = slika + "_" + imageFilter;
+                BufferedImage processedImage = imageFilter.getFilterObject().processImage(s);
+                String naziv = slika + "_" + imageFilter.getFilterName();
                 File outputfile = new File("/home/aleksandar/Documents/NetBeansProjects/NJTProjekat/NJTProjekat-war/web/resources/Images/" + naziv);
                 ImageIO.write(processedImage, "png", outputfile);
 
@@ -130,14 +132,14 @@ public class ObavljanjeBean implements Serializable {
                 sl.setSlikaPK(pk);
                 sl.setNaziv(naziv);
                 zadatak.getSlikaList().add(sl);
-                postaviSlikeZadataka();
-                System.out.println("Gotovo");
-                this.progress = 101;
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
-
+        postaviSlikeZadataka();
+        System.out.println("Gotovo");
+        this.progress = 80;
     }
 
     public void postaviSlikeZadataka() {
@@ -213,11 +215,11 @@ public class ObavljanjeBean implements Serializable {
         this.slike = slike;
     }
 
-    public DualListModel<String> getFilteri() {
+    public DualListModel<FilterPickList> getFilteri() {
         return filteri;
     }
 
-    public void setFilteri(DualListModel<String> filteri) {
+    public void setFilteri(DualListModel<FilterPickList> filteri) {
         this.filteri = filteri;
     }
 

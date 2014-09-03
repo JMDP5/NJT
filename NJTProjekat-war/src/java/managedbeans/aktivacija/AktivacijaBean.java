@@ -44,7 +44,7 @@ public class AktivacijaBean {
             this.ime = k.getIme();
             if (k.getStatus() == 1) {
                 prikazi = false;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aktivacija --> ", "Vas nalog je vec aktiviran."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aktivacija --> ", "Vas nalog je vec aktiviran."));
             } else {
                 prikazi = false;
                 k.setStatus(1);
@@ -53,7 +53,7 @@ public class AktivacijaBean {
             }
         } else {
             prikazi = true;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aktivacija --> ", "Aktivacioni kod ne postoji, proverite aktivacioni link!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Aktivacija --> ", "Aktivacioni kod ne postoji, proverite aktivacioni link!"));
         }
 
         return this.ime;

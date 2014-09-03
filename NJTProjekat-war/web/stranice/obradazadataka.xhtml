@@ -17,6 +17,10 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <ui:composition template="template.xhtml">
+            <ui:define name="header">
+                <ui:include src="headerradnik.xhtml" />
+            </ui:define>
+
             <ui:define name="content">
                 <f:view>
                     <h:form id="form1">
@@ -29,7 +33,8 @@ and open the template in the editor.
                                 <f:selectItem itemLabel="Odaberite zadatak: " itemValue="-1" />
                                 <f:selectItems value="#{obavljanjezadatka.zadaci}" var="z"
                                                itemLabel="#{z.nazivzadatka}" itemValue="#{z.zadatakid}"/>
-                                <f:ajax listener="#{obavljanjezadatka.postaviSlikeZadataka()}" render="slike gslika"/>
+                                <!--<f:ajax listener="{obavljanjezadatka.postaviSlikeZadataka()}" render="slike gslika"/>-->
+                                <p:ajax event="change" listener="#{obavljanjezadatka.postaviSlikeZadataka()}" update="slike,gslika,opis"/>
                             </p:selectOneMenu>
 
                             <h:outputLabel value="Slike: " />
@@ -37,18 +42,23 @@ and open the template in the editor.
                                 <!--<f:selectItem itemLabel="Odaberite sliku " itemValue="-1" />-->
                                 <f:selectItems value="#{obavljanjezadatka.slike}" var="s"
                                                itemLabel="#{s}" itemValue="#{s}"/>
-                                <p:ajax update="gslika"/>
+                                <p:ajax event="change" update="gslika,opis"/>
                             </p:selectOneMenu>
 
+                            <h:outputLabel value="Opis" />
+                            <p:inputText id="opis" value="#{obavljanjezadatka.zadatak.opis}" readonly="true"/>                            
                         </p:panelGrid>
                         <br/>
                         <p:graphicImage id="gslika" url= "../resources/Images/#{obavljanjezadatka.slika}" width="200" height="200"/>  
                         <br/>
                         <br/>
                         <h3 style="margin-top: 0">Filteri za preprocesiranje</h3>
-                        <p:pickList id="pickList" value="#{obavljanjezadatka.filteri}" var="f" itemLabel="#{f}" itemValue="#{f}" />
+                        <p:pickList id="pickList" converter="filterConverter" value="#{obavljanjezadatka.filteri}" var="f" itemLabel="#{f}" itemValue="#{f}" />
                         <p:commandButton id="filterSubmit" value="Primeni fialtere" update="progress,slike" action="#{obavljanjezadatka.primeniFiltere()}" onclick="PF('filterDialog').show();
-                                PF('pbAjax').start()" style="margin-top:5px"/>
+                                PF('pbAjax').start()" style="margin-top:5px">
+                            <!--<p:ajax update="form1"/>-->
+                        </p:commandButton>
+
                         <!--Ovde gore mozda da dodam ajax="false"-->
 
                         <p:dialog id="dialog" modal="true" showEffect="fade" hideEffect="fade" header="Obrada u toku..." widgetVar="filterDialog" width="200">
@@ -60,7 +70,7 @@ and open the template in the editor.
                         </p:dialog>
 
                         <p:commandButton id="sacuvajZadatak" value="Sacuvaj zadatak" actionListener="#{obavljanjezadatka.sacuvajZadatak()}" />
-                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/>
                     </h:form >
                 </f:view>
 

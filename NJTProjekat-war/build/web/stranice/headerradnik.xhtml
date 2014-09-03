@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </h:head>
+    <h:body>
+        <ui:composition>
+            <h:form>
+                <p:menubar >  
+                    <p:menuitem value="Obrada zadataka" url="obradazadataka.xhtml"/>  
+                    <p:submenu label="Profil" icon="ui-icon-gear">  
+                        <p:menuitem value="Moj nalog" url="profilkorisnika.xhtml" />  
+                        <p:menuitem value="Odjavi se" action="#{logovanje.odjaviKorisnika()}"/>  
+                    </p:submenu>  
+                </p:menubar>
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html>

@@ -41,7 +41,7 @@ and open the template in the editor.
                             <h:outputLabel value="Korisnik:" for="korisnik" />
                             <p:selectOneMenu id="korisnik" value="#{zaduzenje.korisnikId}" required="true" requiredMessage="Odaberite korisnika.">
 
-                                <f:selectItem itemLabel="Odaberi korisnika" itemValue="" />
+                                <f:selectItem itemLabel="Odaberi radnika" itemValue="" />
                                 <f:selectItems value="#{zaduzenje.vratiSveKorisnike()}" var="k"
                                                itemLabel="#{k.ime}" itemValue="#{k.korisnikid}"/>
                             </p:selectOneMenu>

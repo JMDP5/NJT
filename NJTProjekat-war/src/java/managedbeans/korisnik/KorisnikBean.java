@@ -44,7 +44,6 @@ public class KorisnikBean implements Serializable {
     private String mestoId;
     private String email;
     private String username;
-    Set<String> korisnickaImena;
 
     /**
      * Creates a new instance of KorisnikBean
@@ -55,16 +54,7 @@ public class KorisnikBean implements Serializable {
     @PostConstruct
     public void init() {
         korisnik = new Korisnik();
-        List<Korisnik> svi = korisnikSession.vratiSveKorisnike();
-        korisnickaImena = new HashSet();
-        for (Korisnik k : svi) {
-            korisnickaImena.add(k.getKorisnickoime());
-        }
 
-    }
-
-    public List<Korisnik> vratiSveKorisnike() {
-        return korisnikSession.vratiSveKorisnike();
     }
 
     public List<Mesto> vratiMesta() {
@@ -90,7 +80,7 @@ public class KorisnikBean implements Serializable {
             korisnik.setEmail(this.email);
             korisnikSession.ubaci(korisnik);
             posaljiAktivacioniMail(korisnik.getEmail(), korisnik.getAktivacioniKod());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Korisnik unet!", "Molimo aktivirajte prvo svoj nalog!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registracija uspesna!", "Molimo aktivirajte prvo svoj nalog!"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage("f1:registruj", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Greska! " + e.getMessage()));
         }
@@ -150,7 +140,7 @@ public class KorisnikBean implements Serializable {
 
             Transport.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException("Mail nije poslat!");
+            throw new RuntimeException("Mail nije poslat! Kontaktirajte administratora!");
         }
     }
 
@@ -176,14 +166,6 @@ public class KorisnikBean implements Serializable {
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        if (this.korisnickaImena.contains(username)) {
-            throw new RuntimeException("Korisnicko ime zauzeto");
-        } else {
-            this.username = username;
-        }
     }
 
 }

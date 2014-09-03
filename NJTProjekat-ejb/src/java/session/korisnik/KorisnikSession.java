@@ -33,8 +33,9 @@ public class KorisnikSession {
         em.flush();
     }
 
-    public List<Korisnik> vratiSveKorisnike() {
-        Query query = em.createNamedQuery("Korisnik.findAll");
+    public List<Korisnik> vratiSveRadnike() {
+        Query query = em.createNamedQuery("Korisnik.findByTipkorisnika");
+        query.setParameter("tipkorisnika", 1);
         return query.getResultList();
     }
 
