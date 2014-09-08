@@ -76,9 +76,7 @@ public class ZadatakBean implements Serializable {
     }
 
     public void dodajSliku() {
-
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "Dodata " + numImages + ". slika!"));
-
     }
 
     public void sacuvajZadatak() {
@@ -99,7 +97,7 @@ public class ZadatakBean implements Serializable {
     }
 
     private void postaviZadatakID() {
-        this.zadatak.setZadatakid(zadatakSession.vratiSledeciIdZadatka());
+        this.zadatak.setZadatakid(zadatakSession.kreirajSledeciID());
     }
 
     public void upload() {

@@ -42,7 +42,7 @@ public class PretragaZadatakBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        this.sviZadaci = zadatakSession.vratiSveZadatke();
+        this.sviZadaci = zadatakSession.pronadjiZadatke();
         rok = null;
     }
 
@@ -67,7 +67,7 @@ public class PretragaZadatakBean implements Serializable {
     public void obrisiZadatak(Zadatak z) {
 
         if (zadatakSession.obrisiZadatak(z.getZadatakid())) {
-            this.sviZadaci = zadatakSession.vratiSveZadatke();
+            this.sviZadaci = zadatakSession.pronadjiZadatke();
             FacesMessage msg = new FacesMessage("Zadatak obrisan! ", z.getNazivzadatka() + " ID: " + z.getZadatakid());
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {

@@ -48,11 +48,11 @@ public class ZaduzenjeBean implements Serializable {
     }
 
     public List<Korisnik> vratiSveKorisnike() {
-        return korisnikSession.vratiSveRadnike();
+        return korisnikSession.pronadjiRadnike();
     }
 
     public List<Zadatak> vratiSveZadatke() {
-        return korisnikSession.vratiSveZadatke();
+        return korisnikSession.pronadjiZadatke();
     }
 
     public Zaduzenje getZaduzenje() {

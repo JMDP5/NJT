@@ -54,7 +54,8 @@ and open the template in the editor.
                         <br/>
                         <h3 style="margin-top: 0">Filteri za preprocesiranje</h3>
                         <p:pickList id="pickList" converter="filterConverter" value="#{obavljanjezadatka.filteri}" var="f" itemLabel="#{f}" itemValue="#{f}" />
-                        <p:commandButton id="filterSubmit" value="Primeni fialtere" update="progress,slike" action="#{obavljanjezadatka.primeniFiltere()}" onclick="PF('filterDialog').show();
+                        <br/>
+                        <p:commandButton id="filterSubmit" value="Primeni filtere" update="progress,slike" action="#{obavljanjezadatka.primeniFiltere()}" onclick="PF('filterDialog').show();
                                 PF('pbAjax').start()" style="margin-top:5px">
                             <!--<p:ajax update="form1"/>-->
                         </p:commandButton>

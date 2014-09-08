@@ -48,7 +48,7 @@ public class AktivacijaBean {
             } else {
                 prikazi = false;
                 k.setStatus(1);
-                korisnikSession.promeniKorisnika(k);
+                korisnikSession.aktivirajNalog(k);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aktivacija --> ", "Vas nalog " + k.getKorisnickoime() + " je uspesno aktiviran."));
             }
         } else {

@@ -59,7 +59,7 @@ public class KorisnikBean implements Serializable {
 
     public List<Mesto> vratiMesta() {
         SelectItem[] option = null;
-        List<Mesto> mestaList = korisnikSession.vratiSvaMesta();
+        List<Mesto> mestaList = korisnikSession.pronadjiMesta();
 //        int i = 0;
 //        option = new SelectItem[mestaList.size()];
 //        for (Mesto m : mestaList) {
@@ -78,7 +78,7 @@ public class KorisnikBean implements Serializable {
             korisnik.setStatus(0); //0 - Neaktivan 1- OK 2-Obrisan
             korisnik.setAktivacioniKod(vratiAktivacioniKod());
             korisnik.setEmail(this.email);
-            korisnikSession.ubaci(korisnik);
+            korisnikSession.registrujRadnika(korisnik);
             posaljiAktivacioniMail(korisnik.getEmail(), korisnik.getAktivacioniKod());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registracija uspesna!", "Molimo aktivirajte prvo svoj nalog!"));
         } catch (Exception e) {

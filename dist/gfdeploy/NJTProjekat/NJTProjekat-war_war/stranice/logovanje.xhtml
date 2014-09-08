@@ -28,9 +28,9 @@ and open the template in the editor.
                             <p:inputText value="#{logovanje.korisnickoime}" id="korisnickoime"/>
                             <p:outputLabel value="Lozinka:" />
                             <p:password value="#{logovanje.loznika}" id="loznika"/>
-                            <h:outputText value="      "></h:outputText>
+                            <p:outputLabel value= "          "  />
                             <p:commandButton value="Uloguj se" action="#{logovanje.ulogujKorisnika()}" update=":form1:msg" ></p:commandButton>
-                            <h:outputText value="              "></h:outputText>
+                            <p:outputLabel value= "          "  />
                             <p:commandLink action="registracija.xhtml?faces-redirect=true" value="Registruj se!"></p:commandLink>
                         </h:panelGrid>
                         <br/>

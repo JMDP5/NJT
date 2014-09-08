@@ -28,18 +28,13 @@ public class KorisnikSession {
     @PersistenceContext(unitName = "NJTProjekat-ejbPU")
     private EntityManager em;
 
-    public void persist(Object object) {
-        em.persist(object);
-        em.flush();
-    }
-
-    public List<Korisnik> vratiSveRadnike() {
+    public List<Korisnik> pronadjiRadnike() {
         Query query = em.createNamedQuery("Korisnik.findByTipkorisnika");
         query.setParameter("tipkorisnika", 1);
         return query.getResultList();
     }
 
-    public Korisnik vratiKorisnikaizBaze(String username) {
+    public Korisnik prijaviSe(String username) {
         Query q = em.createNamedQuery("Korisnik.findByKorisnickoime");
         q.setParameter("korisnickoime", username);
         Object result = null;
@@ -52,13 +47,7 @@ public class KorisnikSession {
         return null;
     }
 
-    public Korisnik izmeni(Korisnik k) {
-        Korisnik promenjen = em.merge(k);
-        return promenjen;
-    }
-
-    public Korisnik ubaci(Korisnik k) {
-        System.out.println("ID:" + k.getKorisnikid() + " ime: " + k.getIme());
+    public Korisnik registrujRadnika(Korisnik k) {
         try {
             em.persist(k);
             em.flush();
@@ -68,7 +57,7 @@ public class KorisnikSession {
         return k;
     }
 
-    public List<Mesto> vratiSvaMesta() {
+    public List<Mesto> pronadjiMesta() {
         Query query = em.createNamedQuery("Mesto.findAll");
         return query.getResultList();
     }
@@ -77,7 +66,7 @@ public class KorisnikSession {
         return (Mesto) em.createNamedQuery("Mesto.findByPttbroj").setParameter("pttbroj", Integer.parseInt(id)).getSingleResult();
     }
 
-    public List<Zadatak> vratiSveZadatke() {
+    public List<Zadatak> pronadjiZadatke() {
         Query query = em.createNamedQuery("Zadatak.findAll");
         return query.getResultList();
     }
@@ -87,14 +76,7 @@ public class KorisnikSession {
         em.flush();
     }
 
-    public void aktivirajNalog(String key) {
-        //em.merge(k); k je korisnik sa promenjenim id-ijem.
-        Query query = em.createQuery("UPDATE Korisnik k SET k.status = 1 WHERE k.aktivacionikod = :aktivacionikod");
-        query.setParameter("aktivacionikod", key);
-        query.executeUpdate();
-    }
-
-    public void promeniKorisnika(Korisnik k) {
+    public void aktivirajNalog(Korisnik k) {
         em.merge(k);
     }
 

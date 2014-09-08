@@ -13,7 +13,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import managedbeans.navigacija.NavigacijaBean;
 import session.korisnik.KorisnikSession;
 
 /**
@@ -54,9 +53,9 @@ public class LogovanjeBean implements Serializable {
 
     public String ulogujKorisnika() {
 
-        Korisnik k = korisnikSession.vratiKorisnikaizBaze(korisnickoime);
+        Korisnik k = korisnikSession.prijaviSe(korisnickoime);
         if (k == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Ne postoji korisnik sa unesenim korisnickim imenom. "));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Zadatak nije sačuvan!"));
         } else {
             if (!loznika.equals(k.getLozinka())) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, null, "Pogresna sifra!"));

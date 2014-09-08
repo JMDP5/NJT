@@ -22,6 +22,7 @@ import session.korisnik.KorisnikSession;
 @Named(value = "usernamevalidation")
 @RequestScoped
 public class UsernameValidation implements Validator {
+
     @EJB
     private KorisnikSession korisnikSession;
 
@@ -36,13 +37,13 @@ public class UsernameValidation implements Validator {
         if (value == null) {
             return;
         }
-        
+
         String username = (String) value;
 
-        if (korisnikSession.vratiKorisnikaizBaze(username) != null) {
+        if (korisnikSession.prijaviSe(username) != null) {
             throw new ValidatorException(new FacesMessage(
                     FacesMessage.SEVERITY_ERROR, "Korisnicko ime zauzetom! Molimo izaberite drugo.", null));
-        }
+        } 
     }
 
 }

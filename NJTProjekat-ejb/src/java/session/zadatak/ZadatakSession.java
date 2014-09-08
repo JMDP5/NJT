@@ -27,49 +27,15 @@ public class ZadatakSession {
     @PersistenceContext(unitName = "NJTProjekat-ejbPU")
     private EntityManager em;
 
-    public void persist(Object object) {
-        em.persist(object);
-        em.flush();
-    }
-
     public void sacuvajZadatak(Zadatak z) {
         em.persist(z);
         em.flush();
     }
 
-    public Integer vratiSledeciIdZadatka() {
+    public Integer kreirajSledeciID() {
         Query query = em.createQuery("SELECT max(z.zadatakid) FROM Zadatak z");
         int max = (Integer) query.getResultList().get(0);
         return ++max;
-    }
-
-    public Object vratiZadatak(String nazivzadatka, String status, Date rok) {
-        String uslov = "";
-        Query query;
-        if (nazivzadatka != null && !nazivzadatka.isEmpty()) {
-            if (!uslov.isEmpty()) {
-                uslov += " AND ";
-            }
-            uslov += "z.nazivzadatka='" + nazivzadatka + "'";
-        }
-        if (status != null && !status.isEmpty()) {
-            if (!uslov.isEmpty()) {
-                uslov += " AND ";
-            }
-            uslov += "z.status='" + status + "'";
-        }
-//        if (rok != null) {
-//            if (!uslov.isEmpty()) {
-//                uslov += " AND ";
-//            }
-//            uslov += "status='" + status + "'";
-//        }
-        if (uslov.isEmpty()) {
-            query = em.createNamedQuery("Zadatak.findAll");
-        } else {
-            query = em.createQuery("SELECT z FROM Zadatak z WHERE " + uslov);
-        }
-        return query.getResultList();
     }
 
     public List<Zadatak> vratiZadatkeKorisnika(Integer idKorisnika) {
@@ -93,10 +59,9 @@ public class ZadatakSession {
 
     public void izmeniZadatak(Zadatak z) {
         em.merge(z);
-
     }
-    
-    public List<Zadatak> vratiSveZadatke() {
+
+    public List<Zadatak> pronadjiZadatke() {
         return em.createNamedQuery("Zadatak.findAll").getResultList();
     }
 
